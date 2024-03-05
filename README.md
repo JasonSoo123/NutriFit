@@ -2,6 +2,8 @@ URL: https://cmpt276-gtg.onrender.com
 
 Feb 25th - Group repo has been initalized
 
+Mar 5th - init database, users and login
+
 Group Project Proposal: NutriFit
 
 
