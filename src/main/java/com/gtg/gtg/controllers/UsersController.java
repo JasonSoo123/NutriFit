@@ -53,20 +53,20 @@ public class UsersController {
         return "main/login"; // Adjust the redirect as necessary for your application
     }
     
-@PostMapping("/login")
-public String processLogin(@RequestParam Map<String, String> userMap, HttpServletResponse response) {
-    // Use the correct keys to retrieve the username and password from the form submission
-    String username = userMap.get("username");
-    String password = userMap.get("password");
+    @PostMapping("/login")
+    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletResponse response) {
+        // Use the correct keys to retrieve the username and password from the form submission
+        String username = userMap.get("username");
+        String password = userMap.get("password");
 
-    List<Users> getUser = UsersRepo.findByUsernameAndPassword(username, password);
+        List<Users> getUser = UsersRepo.findByUsernameAndPassword(username, password);
 
-    if (!getUser.isEmpty()){
-        response.setStatus(200);
-        return "redirect:/test.html"; // Make sure this is the correct path to your test page
-    } else {
-        return "main/login";        
-    }        
-}  
+        if (!getUser.isEmpty()){
+            response.setStatus(200);
+            return "redirect:/test.html"; // Make sure this is the correct path to your test page
+        } else {
+            return "main/login";        
+        }        
+    }  
 
 }
