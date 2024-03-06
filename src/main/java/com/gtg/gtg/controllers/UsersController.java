@@ -28,8 +28,12 @@ public class UsersController {
     public String getHomePage(){
         return "main/login";
     }
-    
-    @PostMapping("/users/add")
+
+    @GetMapping("/add")
+    public String getSignUpPage(){
+        return "main/signup";
+    }
+    @PostMapping("/add")
     public String addUser(@RequestParam Map<String, String> newUser, HttpServletResponse response) {
         // Extract user attributes from the request parameters
         String username = newUser.get("username");
@@ -49,22 +53,20 @@ public class UsersController {
         return "main/login"; // Adjust the redirect as necessary for your application
     }
     
-    @PostMapping("/login")
-    public String processLogin(@RequestParam Map<String, String> User, HttpServletResponse response) {
+@PostMapping("/login")
+public String processLogin(@RequestParam Map<String, String> userMap, HttpServletResponse response) {
+    // Use the correct keys to retrieve the username and password from the form submission
+    String username = userMap.get("username");
+    String password = userMap.get("password");
 
-        System.out.println("meow");
+    List<Users> getUser = UsersRepo.findByUsernameAndPassword(username, password);
 
-        List<Users> getUser = UsersRepo.findByUsernameAndPassword( User.get("name"), User.get("password"));
-
-        if (!getUser.isEmpty()){
-
-            response.setStatus(200);
-            return "test.html";
-
-        } else {
-            return "test.html";
-        }
-        
-    }   
+    if (!getUser.isEmpty()){
+        response.setStatus(200);
+        return "redirect:/test.html"; // Make sure this is the correct path to your test page
+    } else {
+        return "main/login";        
+    }        
+}  
 
 }
