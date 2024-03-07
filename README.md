@@ -4,6 +4,8 @@ Feb 25th - Group repo has been initalized
 
 Mar 5th - init database, users and login
 
+Mar 6th - login page, sign up page done
+
 Group Project Proposal: NutriFit
 
 
