@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.util.List;
 
 
@@ -28,12 +30,14 @@ public class UsersController {
    private UsersRepository UsersRepo;
 
    @GetMapping("/")
-   public String getHomePage(HttpSession session) {
-       if (session.getAttribute("session_user") != null) {
-           return "main/protected"; // Change to your protected page path
-       }
-       return "main/login";
+   public RedirectView process(){
+    return new RedirectView("login");
    }
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "main/login";
+    }
    
 
     @GetMapping("/add")
