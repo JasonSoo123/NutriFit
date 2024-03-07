@@ -13,6 +13,7 @@ import java.util.List;
 import com.gtg.gtg.models.Users;
 import com.gtg.gtg.models.UsersRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -60,7 +61,7 @@ public class UsersController {
     }
     
     @PostMapping("/login")
-    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletResponse response, HttpSession session) {
+    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletRequest request, Model model) {
         String username = userMap.get("username");
         String password = userMap.get("password");
     
@@ -68,28 +69,18 @@ public class UsersController {
     
         if (!getUser.isEmpty()){
             Users user = getUser.get(0); // Assuming username & password combination is unique
-            session.setAttribute("session_user", user); // Store user in session
-            return "main/protected"; // Change to the path of your protected page
+            request.getSession().setAttribute("session_user", user); // Store user in session
+            model.addAttribute("user", user);
+            return "main/main"; // Change to the path of your protected page
         } else {
             return "main/login";        
         }        
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
         return "main/login"; // Adjust the path as necessary
     }
-
-    @GetMapping("/protected")
-    public String getProtectedPage(HttpSession session) {
-        if (session.getAttribute("session_user") == null) {
-            // User not logged in, redirect to login page
-            return "main/login";
-        }
-        // User is logged in, return the protected view
-        return "main/protected"; // Assuming your protected.html is in src/main/resources/templates/main/
-    }
-    
 
 }
