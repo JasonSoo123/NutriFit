@@ -14,6 +14,8 @@ import com.gtg.gtg.models.Users;
 import com.gtg.gtg.models.UsersRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 
 import java.util.Map;
 import java.sql.Date;
@@ -24,10 +26,14 @@ public class UsersController {
     @Autowired
    private UsersRepository UsersRepo;
 
-    @GetMapping("/")
-    public String getHomePage(){
-        return "main/login";
-    }
+   @GetMapping("/")
+   public String getHomePage(HttpSession session) {
+       if (session.getAttribute("session_user") != null) {
+           return "main/protected"; // Change to your protected page path
+       }
+       return "main/login";
+   }
+   
 
     @GetMapping("/add")
     public String getSignUpPage(){
@@ -54,19 +60,36 @@ public class UsersController {
     }
     
     @PostMapping("/login")
-    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletResponse response) {
-        // Use the correct keys to retrieve the username and password from the form submission
+    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletResponse response, HttpSession session) {
         String username = userMap.get("username");
         String password = userMap.get("password");
-
+    
         List<Users> getUser = UsersRepo.findByUsernameAndPassword(username, password);
-
+    
         if (!getUser.isEmpty()){
-            response.setStatus(200);
-            return "redirect:/test.html"; // Make sure this is the correct path to your test page
+            Users user = getUser.get(0); // Assuming username & password combination is unique
+            session.setAttribute("session_user", user); // Store user in session
+            return "main/protected"; // Change to the path of your protected page
         } else {
             return "main/login";        
         }        
-    }  
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "main/login"; // Adjust the path as necessary
+    }
+
+    @GetMapping("/protected")
+    public String getProtectedPage(HttpSession session) {
+        if (session.getAttribute("session_user") == null) {
+            // User not logged in, redirect to login page
+            return "main/login";
+        }
+        // User is logged in, return the protected view
+        return "main/protected"; // Assuming your protected.html is in src/main/resources/templates/main/
+    }
+    
 
 }
