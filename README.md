@@ -11,9 +11,8 @@ Mar 11th - Updated the User main page and Admin page
     NOTE: To access admin part use Username: jason_poopoo Password: poopoo
     To access user part use Username: USER_TEST Password: 123
 
-![alt text](<src/main/resources/static/images/Screenshot 2024-03-11 at 11.47.29 PM.png>)
-![alt text](<src/main/resources/static/images/Screenshot 2024-03-11 at 11.51.08 PM.png>)
-
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 12.13.31 AM.png>)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 12.16.51 AM.png>)
 
 Group Project Proposal: NutriFit
 
