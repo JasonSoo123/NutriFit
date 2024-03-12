@@ -63,14 +63,17 @@
   
   /* Features section styling */
   .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin: 40px 0;
-    
+    display: flex;
+    flex-direction: row;  /* Aligns children horizontally */
+    justify-content: space-around; /* Distributes space around the items */
+    align-items: center; /* Centers items vertically */
+    flex-wrap: wrap; /* Allows items to wrap as needed */
+    height: 100%; /* Takes at least the entire height of the viewport */
   }
   
   .feature-item {
+    width: 240px; /* Set a fixed width for each item */
+    margin: 10px; /* This margin creates additional spacing */
     background: #457b9d;
     color: #fff;
     padding: 20px;
@@ -101,8 +104,17 @@
   
   /* Media query for responsive design */
   @media (max-width: 768px) {
-    .features {
-      grid-template-columns: 1fr;
+    .feature-item {
+      width: calc(50% - 20px); /* Adjust width for smaller screens */
+      margin: 10px; /* Adjust margin for smaller screens */
+    }
+  }
+  
+  /* For very small screens, make feature items full width */
+  @media (max-width: 480px) {
+    .feature-item {
+      width: 100%; /* Full width for very small screens */
+      margin: 10px 0; /* Adjust top/bottom margin only */
     }
   }
   
