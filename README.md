@@ -12,7 +12,12 @@ Mar 11th - Updated the User main page and Admin page
     To access user part use Username: USER_TEST Password: 123
 
 ![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 12.13.31 AM.png>)
-![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 12.16.51 AM.png>)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 1.22.00 PM.png>)
+
+Mar 12th - Updated the Login page and Sign Up page
+
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 1.21.02 PM.png>)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 1.21.12 PM.png>)
 
 Group Project Proposal: NutriFit
 
