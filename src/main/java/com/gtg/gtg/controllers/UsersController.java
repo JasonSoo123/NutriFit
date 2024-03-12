@@ -54,7 +54,7 @@ public class UsersController {
         Date birthday = newUser.get("birthday") != null ? Date.valueOf(newUser.get("birthday")) : null;
     
         // Create and save the new user entity
-        Users user = new Users(username, name, email, password, birthday);
+        Users user = new Users(username, name, email, password, 1, birthday);
         UsersRepo.save(user);
     
         // Set the response status code to 201 Created

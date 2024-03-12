@@ -19,17 +19,20 @@ public class Users {
 
     private String password;
 
+    private int usertype; // 0 for admin, 1 for user
+
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
     public Users() {
     }
 
-    public Users(String username, String name, String email, String password, Date birthday) {
+    public Users(String username, String name, String email, String password, int usertype, Date birthday) {
         this.username = username;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.usertype = usertype;
         this.birthday = birthday;
     }
 
@@ -80,4 +83,13 @@ public class Users {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
+    public int getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(int usertype) {
+        this.usertype = usertype;
+    }
+    
 }
