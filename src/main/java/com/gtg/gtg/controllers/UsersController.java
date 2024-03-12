@@ -75,7 +75,13 @@ public class UsersController {
             Users user = getUser.get(0); // Assuming username & password combination is unique
             request.getSession().setAttribute("session_user", user); // Store user in session
             model.addAttribute("user", user);
-            return "main/main"; // Change to the path of your protected page
+            if (user.getUsertype() == 1) {
+
+                return "main/main"; // Change to the path of your protected page
+
+            } else {
+                return "main/admin";
+            }
         } else {
             return "main/login";        
         }        
