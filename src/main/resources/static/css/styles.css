@@ -1,0 +1,15 @@
+:root {
+    /* Updated color variables based on the logo */
+    --primary-color: #a8dadc; /* Dominant color from the logo */
+    --secondary-color: #457b9d; /* Secondary color from the logo */
+    --light-color: #abddde; /* Light color from the logo for accents or highlights */
+}
+body {
+    background-color: var(--light-color);
+    color: var(--secondary-color);
+}
+.navbar, .footer {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+/* Additional custom styles if needed */
