@@ -3,43 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap CSS for Grid and Responsiveness -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Custom CSS File -->
   <link rel="stylesheet" href="/css/styles.css">
-  <title>NutriFit</title>
+  <title>NutriFit Admin View</title>
 </head>
 <body>
   <nav class="navbar">
     <img src="/images/NFLogo.png" alt="NutriFit Logo">
+    <a href="/logout">Logout</a>
   </nav>
 
   <header class="header">
-    <h1>Welcome to NutriFit</h1>
-    <p>Your path to a healthy lifestyle.</p>
-    <p class="welcome">Welcome</p> <!-- New welcome message -->
+    <h1>NutriFit Admin</h1>
   </header>
 
-  <div class="container features">
-    <!-- Feature 1 -->
-    <div class="feature-item">
-      <h3>Personalized Meal Plans</h3>
-      <p>AI-driven meal planning tailored to your fitness goals and dietary preferences.</p>
-    </div>
-    <!-- Feature 2 -->
-    <div class="feature-item">
-      <h3>Progress Tracking</h3>
-      <p>Visualize your journey with real-time metrics and insights to keep you on track.</p>
-    </div>
-    <!-- Feature 3 -->
-    <div class="feature-item">
-      <h3>Community Support</h3>
-      <p>Connect with peers and experts to share experiences and get motivation.</p>
-    </div>
-    <!-- Feature 4 -->
-    <div class="feature-item">
-      <h3>Shopping Simplified</h3>
-      <p>Smart grocery lists that adapt to your plans and budget, making shopping a breeze.</p>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <h1>Welcome, Admin!</h1>
+        <h2>Admin User Details:</h2>
+        <p>Username: <span th:text="${adminUser.username}"></span></p>
+        <p>Name: <span th:text="${adminUser.name}"></span></p>
+
+        <h2>All Users:</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Birthday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="user : ${users}">
+              <td th:text="${user.username}"></td>
+              <td th:text="${user.name}"></td>
+              <td th:text="${user.email}"></td>
+              <td th:text="${user.birthday}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -47,7 +52,6 @@
     <span>Stay connected with NutriFit.</span>
   </footer>
 
-  <!-- Bootstrap JS, Popper.js, and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

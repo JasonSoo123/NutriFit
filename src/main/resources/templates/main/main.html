@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Custom CSS File -->
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>NutriFit</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>NutriFit</title>
 </head>
 <body>
+  <nav class="navbar">
+    <img src="/images/NFLogo.png" alt="NutriFit Logo">
+    <a href="/logout">Logout</a>
+  </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#"><img src="/images/NFLogo.png" alt="NutriFit Logo"></a>
-        <!-- Navigation content -->
-    </nav>
+  <header class="header">
+    <h1>Welcome to NutriFit</h1>
+    <p>Your path to a healthy lifestyle.</p>
+    <p class="welcome" th:text="'Welcome back, ' + ${user.name} + '!'"></p>
+  </header>
 
-    <div class="container">
-        <div class="welcome-message">
-            <h1>Welcome to NutriFit</h1>
-            <p>Your path to a healthy lifestyle.</p>
-        </div>
-        
-        <!-- Here's how you can include an image -->
-        <img src="/images/NF_Small.png" alt="Descriptive text about the image">
-
-        <!-- Additional content here -->
+  <div class="container features">
+    <!-- Feature 1 -->
+    <div class="feature-item">
+      <h3>Personalized Meal Plans</h3>
+      <p>AI-driven meal planning tailored to your fitness goals and dietary preferences.</p>
     </div>
+    <!-- Feature 2 -->
+    <div class="feature-item">
+      <h3>Progress Tracking</h3>
+      <p>Visualize your journey with real-time metrics and insights to keep you on track.</p>
+    </div>
+    <!-- Feature 3 -->
+    <div class="feature-item">
+      <h3>Community Support</h3>
+      <p>Connect with peers and experts to share experiences and get motivation.</p>
+    </div>
+    <!-- Feature 4 -->
+    <div class="feature-item">
+      <h3>Shopping Simplified</h3>
+      <p>Smart grocery lists that adapt to your plans and budget, making shopping a breeze.</p>
+    </div>
+  </div>
 
-    <footer class="footer mt-auto py-3">
-        <div class="container">
-            <span class="text-muted">Stay connected with NutriFit.</span>
-        </div>
-    </footer>
+  <footer class="footer">
+    <span>Stay connected with NutriFit.</span>
+  </footer>
 
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Main JavaScript File -->
-    <script src="main.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

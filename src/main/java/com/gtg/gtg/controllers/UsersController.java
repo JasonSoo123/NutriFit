@@ -17,7 +17,6 @@ import com.gtg.gtg.models.UsersRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 
 import java.util.Map;
@@ -63,28 +62,32 @@ public class UsersController {
         // Redirect to a view, e.g., to list all users or to a user profile page
         return "main/login"; // Adjust the redirect as necessary for your application
     }
-    
+
     @PostMapping("/login")
     public String processLogin(@RequestParam Map<String, String> userMap, HttpServletRequest request, Model model) {
         String username = userMap.get("username");
         String password = userMap.get("password");
-    
+
         List<Users> getUser = UsersRepo.findByUsernameAndPassword(username, password);
-    
-        if (!getUser.isEmpty()){
+
+        if (!getUser.isEmpty()) {
             Users user = getUser.get(0); // Assuming username & password combination is unique
             request.getSession().setAttribute("session_user", user); // Store user in session
-            model.addAttribute("user", user);
-            if (user.getUsertype() == 1) {
 
-                return "main/main"; // Change to the path of your protected page
+            if (user.getUsertype() == 0) {
+                // If the user is an admin, fetch all users from the database and add to the model
+                List<Users> users = UsersRepo.findByUsertype(1);
+                model.addAttribute("adminUser", user); // Add the admin user to the model
+                model.addAttribute("users", users); // Add the list of all users to the model
 
-            } else {
                 return "main/admin";
+            } else {
+                model.addAttribute("user", user);
+                return "main/main"; // Change to the path of your protected page
             }
         } else {
-            return "main/login";        
-        }        
+            return "main/login";
+        }
     }
 
     @GetMapping("/logout")
@@ -92,5 +95,4 @@ public class UsersController {
         request.getSession().invalidate();
         return "main/login"; // Adjust the path as necessary
     }
-
 }
