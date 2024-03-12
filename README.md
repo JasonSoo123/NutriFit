@@ -6,9 +6,15 @@ Mar 5th - init database, users and login
 
 Mar 6th - login page, sign up page done
 
+Mar 11th - Updated the User main page and Admin page
+
+NOTE: To access admin part use USERNAME: jason_poopoo Password: poopoo
+
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-11 at 11.47.29 PM.png>)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-11 at 11.51.08 PM.png>)
+
+
 Group Project Proposal: NutriFit
-
-
 
 NutriFit is designed to revolutionize the way individuals with specific fitness goals approach nutrition and meal planning. By catering to unique dietary needs and fitness objectives, this web app aims to simplify the journey towards a healthier lifestyle. Whether users are looking to gain muscle, lose weight, or maintain a balanced diet to support an active lifestyle, our solution offers personalized guidance every step of the way. 
 
