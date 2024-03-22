@@ -61,33 +61,66 @@
     margin-bottom: 20px;
   }
   
-  /* Features section styling */
   .features {
     display: flex;
-    flex-direction: row;  /* Aligns children horizontally */
-    justify-content: space-around; /* Distributes space around the items */
-    align-items: center; /* Centers items vertically */
-    flex-wrap: wrap; /* Allows items to wrap as needed */
-    height: 100%; /* Takes at least the entire height of the viewport */
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100%;
   }
-  
+
   .feature-item {
-    width: 240px; /* Set a fixed width for each item */
-    margin: 10px; /* This margin creates additional spacing */
+    width: 240px;
+    margin: 10px;
     background: #457b9d;
     color: #fff;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 0 25px 0 black;
+    transition: transform 0.3s; 
   }
-  
+
+  .feature-item:hover {
+    transform: scale(1.04); /* Added hover effect */
+  }
+
   .feature-item h3 {
     margin-bottom: 10px;
     font-size: 1.5em;
   }
-  
+
   .feature-item p {
     font-size: 1em;
+  }
+
+  .feature-item button {
+    padding: 5px 30px;
+    border: none;
+    background-color: tomato;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 20px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 0 25px 0 black;
+    transition: transform 0.3s;
+  }
+
+  .feature-item button:hover {
+    transform: scale(1.04);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+  }
+
+  .feature-item-link {
+    text-decoration: none;
+    color: inherit;
   }
   
   /* Footer styling */

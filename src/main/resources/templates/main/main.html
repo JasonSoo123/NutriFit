@@ -16,31 +16,37 @@
   <header class="header">
     <h1>Welcome to NutriFit</h1>
     <p>Your path to a healthy lifestyle.</p>
-    <p class="welcome" th:text="'Welcome back, ' + ${user.name} + '!'"></p>
+    <p class="welcome fade-in" th:text="'Welcome back, ' + ${user.name} + '!'"></p>
   </header>
 
   <div class="container features">
-    <!-- Feature 1 -->
-    <div class="feature-item">
-      <h3>Personalized Meal Plans</h3>
-      <p>AI-driven meal planning tailored to your fitness goals and dietary preferences.</p>
-    </div>
-    <!-- Feature 2 -->
-    <div class="feature-item">
-      <h3>Progress Tracking</h3>
-      <p>Visualize your journey with real-time metrics and insights to keep you on track.</p>
-    </div>
-    <!-- Feature 3 -->
-    <div class="feature-item">
-      <h3>Community Support</h3>
-      <p>Connect with peers and experts to share experiences and get motivation.</p>
-    </div>
-    <!-- Feature 4 -->
-    <div class="feature-item">
-      <h3>Shopping Simplified</h3>
-      <p>Smart grocery lists that adapt to your plans and budget, making shopping a breeze.</p>
-    </div>
+    <!-- Feature 1 - Personalized Meal Plans -->
+    <a th:href="@{/meals}" class="feature-item-link">
+      <div class="feature-item">
+        <h3>Personalized Meal Plans</h3>
+        <p>AI-driven meal planning tailored to your fitness goals and dietary preferences.</p>
+      </div>
+    </a>
+    <a th:href="@{/progress}" class="feature-item-link">
+      <div class="feature-item">
+        <h3>Progress Tracking</h3>
+        <p>Visualize your journey with real-time metrics and insights to keep you on track.</p>
+      </div>
+    </a>
+    <a th:href="@{/support}" class="feature-item-link">
+      <div class="feature-item">
+        <h3>Community Support</h3>
+        <p>Connect with peers and experts to share experiences and plans.</p>
+      </div>
+    </a>
+    <a th:href="@{/shopping}" class="feature-item-link">
+      <div class="feature-item">
+        <h3>Shopping Simplified</h3>
+        <p>Smart grocery lists that adapt to your plans and budget.</p>
+      </div>
+    </a>
   </div>
+  
 
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
@@ -50,5 +56,15 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var fadeInElements = document.querySelectorAll('.fade-in');
+      fadeInElements.forEach(function(element) {
+        setTimeout(function() {
+          element.style.opacity = 1;
+        }, 100);
+      });
+    });
+  </script>
 </body>
 </html>

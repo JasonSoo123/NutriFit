@@ -95,4 +95,24 @@ public class UsersController {
         request.getSession().invalidate();
         return "main/login"; // Adjust the path as necessary
     }
+
+    @GetMapping("/meals")
+    public String showMealsPage() {
+        return "main/meals"; // Assuming the template is directly under src/main/resources/templates/
+    }
+
+    @GetMapping("/progress")
+    public String showProgressPage() {
+        return "main/progress"; // Path to the progress template
+    }
+
+    @GetMapping("/support")
+    public String showSupportPage() {
+        return "main/support"; // Path to the support template
+    }
+
+    @GetMapping("/shopping")
+    public String showShoppingPage() {
+        return "main/shopping"; // Path to the shopping template
+    }
 }
