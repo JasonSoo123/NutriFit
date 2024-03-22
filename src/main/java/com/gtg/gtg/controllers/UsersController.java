@@ -86,6 +86,8 @@ public class UsersController {
                 return "main/main"; // Change to the path of your protected page
             }
         } else {
+            //No user mathced password/username
+            model.addAttribute("loginError", "Incorrect Username or Password");
             return "main/login";
         }
     }

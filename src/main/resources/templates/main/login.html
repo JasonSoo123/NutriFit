@@ -26,6 +26,11 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
+                    <div class="text-center mt-3">
+                        <!-- Display error message if it exists in the model -->
+                        <p th:if="${loginError}" class="text-danger" style="display: block;">Error: <span th:text="${loginError}"></span></p>
+                    </div>
+
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
