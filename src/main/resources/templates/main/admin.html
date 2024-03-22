@@ -26,24 +26,30 @@
         <p>Name: <span th:text="${adminUser.name}"></span></p>
 
         <h2>All Users:</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Birthday</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="user : ${users}">
-              <td th:text="${user.username}"></td>
-              <td th:text="${user.name}"></td>
-              <td th:text="${user.email}"></td>
-              <td th:text="${user.birthday}"></td>
-            </tr>
-          </tbody>
-        </table>
+        <form method="post" action="/delete">
+          <input type="hidden" name="adminUsername" th:value="${adminUser.username}">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Birthday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="user : ${users}">
+                <td><input type="checkbox" name="selectedUsers" th:value="${user.username}" /></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.birthday}"></td>
+              </tr>
+            </tbody>
+          </table>
+          <button id="deleteBtn" type="submit" class="btn btn-primary" disabled>Delete Selected</button>
+        </form>
       </div>
     </div>
   </div>
@@ -55,5 +61,15 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to enable/disable delete button based on checkbox selection
+    $(document).ready(function() {
+      $('input[name="selectedUsers"]').change(function() {
+        var anyChecked = $('input[name="selectedUsers"]:checked').length > 0;
+        $('#deleteBtn').prop('disabled', !anyChecked);
+      });
+    });
+  </script>
 </body>
 </html>

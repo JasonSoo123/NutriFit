@@ -78,7 +78,7 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 0 25px 0 black;
+    box-shadow: 0 0 7px 0 black;
     transition: transform 0.3s; 
   }
 
@@ -105,7 +105,7 @@
     font-size: 20px;
     display: block;
     margin: 0 auto;
-    box-shadow: 0 0 25px 0 black;
+    box-shadow: 0 0 7px 0 black;
     transition: transform 0.3s;
   }
 

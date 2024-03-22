@@ -65,6 +65,7 @@ public class UsersController {
 
     @PostMapping("/login")
     public String processLogin(@RequestParam Map<String, String> userMap, HttpServletRequest request, Model model) {
+        
         String username = userMap.get("username");
         String password = userMap.get("password");
 
@@ -92,6 +93,28 @@ public class UsersController {
         }
     }
 
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam("selectedUsers") List<String> selectedUsers,
+     @RequestParam("adminUsername") String adminUsername, Model model) {
+
+        if (selectedUsers != null) {
+            for (String username : selectedUsers) {
+                System.out.println("Deleting user: " + username);
+                List<Users> getUsers = UsersRepo.findByUsername(username);
+                Users user = getUsers.get(0);
+                UsersRepo.delete(user);
+            }
+        }
+        
+        // model to reload admin page.
+        List<Users> getUsers = UsersRepo.findByUsername(adminUsername);
+        Users user = getUsers.get(0);
+        model.addAttribute("adminUser", user);
+        List<Users> users = UsersRepo.findByUsertype(1);
+        model.addAttribute("users", users);
+
+        return "main/admin"; // Redirect to admin page after deletion
+    }
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
