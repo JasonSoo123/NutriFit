@@ -61,13 +61,50 @@
       <div class="card-body">
         <h2 class="card-title" th:text="${hit.recipe.label}">Recipe Label</h2>
         <img th:src="${hit.recipe.image}" alt="Recipe Image" class="img-thumbnail custom-img-size">
+        
         <div class="recipe-details">
+          <div class="diet-health">
+            <h3>Diet Labels</h3>
+            <p th:each="diet : ${hit.recipe.dietLabels}" th:text="${diet}">Diet Label</p>
+            
+            <h3>Health Labels</h3>
+            <p th:each="health : ${hit.recipe.healthLabels}" th:text="${health}">Health Label</p>
+            
+            <h3>Cautions</h3>
+            <p th:each="caution : ${hit.recipe.cautions}" th:text="${caution}">Caution</p>
+          </div>
+
           <div class="ingredients">
             <h3>Ingredients</h3>
             <ul>
-              <li th:each="ingredient : ${hit.recipe.ingredientLines}" th:text="${ingredient}">Ingredient Line</li>
+              <li th:each="ingredientLine : ${hit.recipe.ingredientLines}" th:text="${ingredientLine}">Ingredient Line</li>
             </ul>
           </div>
+
+          <div class="calories-cuisine">
+            <h3>Calories</h3>
+            <p th:text="${hit.recipe.calories} + ' kcal'">Calories</p>
+            
+            <h3>Cuisine Type</h3>
+            <p th:each="cuisine : ${hit.recipe.cuisineType}" th:text="${cuisine}">Cuisine Type</p>
+          </div>
+
+          <div class="meal-dish">
+            <h3>Meal Type</h3>
+            <p th:each="meal : ${hit.recipe.mealType}" th:text="${meal}">Meal Type</p>
+            
+            <h3>Dish Type</h3>
+            <p th:each="dish : ${hit.recipe.dishType}" th:text="${dish}">Dish Type</p>
+          </div>
+
+          <!-- Assuming instructions are provided as a list of strings -->
+          <div class="instructions">
+            <h3>Instructions</h3>
+            <ol>
+              <li th:each="instruction : ${hit.recipe.instructions}" th:text="${instruction}">Instruction</li>
+            </ol>
+          </div>
+          
           <!-- Link to the full recipe instructions -->
           <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
         </div>
