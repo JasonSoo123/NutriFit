@@ -1,26 +1,37 @@
 package com.gtg.gtg.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.LinkedMultiValueMap;
 
-import java.util.List;
 
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gtg.gtg.models.Users;
 import com.gtg.gtg.models.UsersRepository;
+import com.gtg.gtg.RecipeResult; // Ensure RecipeResult is in the com.gtg.gtg package
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 import java.sql.Date;
+import java.net.URLEncoder;
+
 
 @Controller
 public class UsersController {
@@ -140,4 +151,67 @@ public class UsersController {
     public String showShoppingPage() {
         return "main/shopping"; // Path to the shopping template
     }
+
+    @Value("${edamam.api.id}")
+    private String apiId;
+
+    @Value("${edamam.api.key}")
+    private String apiKey;
+
+    @PostMapping("/search-recipe")
+    public String searchRecipe(@RequestParam String ingredient,
+                               @RequestParam(required = false) List<String> diet,
+                               @RequestParam(required = false) List<String> health,
+                               Model model) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.edamam.com/api/recipes/v2")
+                .queryParam("type", "public")
+                .queryParam("q", "") // Placeholder for the ingredient, will be set after encoding
+                .queryParam("app_id", apiId)
+                .queryParam("app_key", apiKey);
+    
+        // Join diet and health lists with commas if they are not empty
+        if (diet != null && !diet.isEmpty()) {
+            String diets = String.join(",", diet);
+            builder.queryParam("diet", diets);
+        }
+        if (health != null && !health.isEmpty()) {
+            String healthLabels = String.join(",", health);
+            builder.queryParam("health", healthLabels);
+        }
+    
+        try {
+            String encodedIngredient = URLEncoder.encode(ingredient.trim(), "UTF-8");
+            builder.replaceQueryParam("q", encodedIngredient); // Replace placeholder with encoded value
+            System.out.println("Encoded Ingredient: " + encodedIngredient); // Debug log
+        } catch (UnsupportedEncodingException e) {
+            model.addAttribute("error", "Error encoding ingredients");
+            return "main/meals";
+        }
+    
+        String urlTemplate = builder.build().encode().toUriString();
+        System.out.println("URL Template: " + urlTemplate); // Debug log
+    
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(urlTemplate, String.class);
+    
+            if(response.getStatusCode() == HttpStatus.OK) {
+                ObjectMapper mapper = new ObjectMapper();
+                RecipeResult recipeResult = mapper.readValue(response.getBody(), RecipeResult.class);
+                model.addAttribute("recipes", recipeResult.getHits());
+            } else {
+                model.addAttribute("error", "Failed to fetch recipes: " + response.getStatusCode());
+            }
+        } catch (HttpClientErrorException e) {
+            model.addAttribute("error", "API request error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            model.addAttribute("error", "Error parsing recipe data");
+            e.printStackTrace();
+        }
+    
+        return "main/meals";
+    }
+    
+
 }

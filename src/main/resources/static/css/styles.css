@@ -135,6 +135,42 @@
     color: #a8dadc;
   }
   
+/* Results section styling */
+.results {
+  margin-top: 30px;
+}
+
+.recipe {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f0f0f0; /* Light grey background for recipe cards */
+  border-radius: 10px; /* Rounded corners for recipe cards */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.recipe:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Larger shadow on hover for interaction effect */
+}
+
+.recipe img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px; /* Slight rounding on image corners */
+  margin-bottom: 15px;
+}
+
+.recipe h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.custom-img-size {
+  max-width: 200px;
+  height: auto;
+}
+
   /* Media query for responsive design */
   @media (max-width: 768px) {
     .features {

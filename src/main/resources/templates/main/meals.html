@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
-  <title>Meals</title>
+  <title>NutriFit Meal Planner</title>
 </head>
 <body>
   <nav class="navbar">
@@ -14,17 +14,78 @@
   </nav>
 
   <header class="header">
-    <h1>Meals</h1>
+    <h1>Find a Recipe</h1>
   </header>
 
+  <div class="container">
+    <form th:action="@{/search-recipe}" method="post">
+      <!-- Calories range input -->
+      <div class="row">
+        <div class="col">
+          <label for="caloriesFrom">Calories From:</label>
+          <input type="number" class="form-control" id="caloriesFrom" name="caloriesFrom" placeholder="e.g. 100">
+        </div>
+        <div class="col">
+          <label for="caloriesTo">Calories To:</label>
+          <input type="number" class="form-control" id="caloriesTo" name="caloriesTo" placeholder="e.g. 500">
+        </div>
+      </div>
+      <!-- Ingredients input -->
+      <div class="form-group">
+        <label for="ingredient">Ingredients (comma separated):</label>
+        <input type="text" class="form-control" id="ingredient" name="ingredient" placeholder="chicken,lettuce,tomato" required>
+      </div>
+      <!-- Diet checkboxes -->
+      <div class="form-group">
+        <label>Diet:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="vegetarian" name="diet" value="vegetarian">
+          <label class="form-check-label" for="vegetarian">Vegetarian</label>
+        </div>
+      </div>
+      <!-- Allergies checkboxes -->
+      <div class="form-group">
+        <label>Allergies:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gluten" name="health" value="gluten-free">
+          <label class="form-check-label" for="gluten">Gluten</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    
+<!-- Section for displaying search results -->
+<div th:if="${not #lists.isEmpty(recipes)}" class="row">
+  <div th:each="hit : ${recipes}" class="col-md-12">
+    <div class="recipe card mb-4 box-shadow">
+      <div class="card-body">
+        <h2 class="card-title" th:text="${hit.recipe.label}">Recipe Label</h2>
+        <img th:src="${hit.recipe.image}" alt="Recipe Image" class="img-thumbnail custom-img-size">
+        <div class="recipe-details">
+          <div class="ingredients">
+            <h3>Ingredients</h3>
+            <ul>
+              <li th:each="ingredient : ${hit.recipe.ingredientLines}" th:text="${ingredient}">Ingredient Line</li>
+            </ul>
+          </div>
+          <!-- Link to the full recipe instructions -->
+          <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:if="${#lists.isEmpty(recipes)}">
+  <p>No recipes found or search not yet performed.</p>
+</div>
 
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>
 
-  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+  </body>
+  </html>
