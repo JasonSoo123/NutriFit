@@ -177,4 +177,17 @@
       grid-template-columns: 1fr;
     }
   }
+
+
+.save-recipe-btn {
+  background-color: #28a745; /* Adjust the color as needed */
+  border-color: #28a745; /* Adjust the border color as needed */
+}
+  
+/* Hover effect */
+.save-recipe-btn:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+  
   

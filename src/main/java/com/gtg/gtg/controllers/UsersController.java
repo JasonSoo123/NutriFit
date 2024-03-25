@@ -1,36 +1,39 @@
 package com.gtg.gtg.controllers;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.sql.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.util.MultiValueMap;
-import org.springframework.util.LinkedMultiValueMap;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gtg.gtg.RecipeResult; // Ensure RecipeResult is in the com.gtg.gtg package
+import com.gtg.gtg.models.SavedRecipe;
+import com.gtg.gtg.models.SavedRecipesRepository;
 import com.gtg.gtg.models.Users;
 import com.gtg.gtg.models.UsersRepository;
-import com.gtg.gtg.RecipeResult; // Ensure RecipeResult is in the com.gtg.gtg package
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
-import java.sql.Date;
-import java.net.URLEncoder;
 
 
 @Controller
@@ -38,6 +41,9 @@ public class UsersController {
 
     @Autowired
    private UsersRepository UsersRepo;
+
+    @Autowired
+   private SavedRecipesRepository savedRecipesRepo;
 
    @GetMapping("/")
    public RedirectView process(){
@@ -212,6 +218,73 @@ public class UsersController {
     
         return "main/meals";
     }
-    
 
+    @PostMapping("/save-recipe")
+public ResponseEntity<String> saveRecipe(HttpServletRequest request, @RequestBody Map<String, String> payload) {
+    Users sessionUser = (Users)request.getSession().getAttribute("session_user");
+    if (sessionUser == null) {
+        return new ResponseEntity<>("User must be logged in to save recipes.", HttpStatus.FORBIDDEN);
+    }
+    
+    String recipeUri = payload.get("recipeUri");
+    if (recipeUri == null || recipeUri.isEmpty()) {
+        return new ResponseEntity<>("Recipe URI is required.", HttpStatus.BAD_REQUEST);
+    }
+
+    // Debugging: log the user ID and recipe URI
+    System.out.println("Checking for existing recipe. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+    
+    // boolean recipeExists = savedRecipesRepo.existsByUserIdAndRecipeUri(sessionUser.getUid(), recipeUri);
+    // if (recipeExists) {
+    //     System.out.println("Recipe already saved. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+    //     return new ResponseEntity<>("Recipe already saved.", HttpStatus.BAD_REQUEST);
+    // }
+
+    // Debugging: log the actual save attempt
+    System.out.println("Saving recipe. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+
+    SavedRecipe savedRecipe = new SavedRecipe();
+    savedRecipe.setUserId(sessionUser.getUid());
+    savedRecipe.setRecipeUri(recipeUri);
+    savedRecipesRepo.save(savedRecipe);
+
+    System.out.println("Recipe saved successfully. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+    return new ResponseEntity<>("Recipe saved successfully.", HttpStatus.CREATED);
+    }
+
+
+    @RequestMapping("/saved")
+    public String showSavedRecipes(HttpServletRequest request, Model model) {
+        Users sessionUser = (Users)request.getSession().getAttribute("session_user");
+        if (sessionUser == null) {
+            return "redirect:/login"; // Redirect to login if not logged in
+        }
+    
+        List<SavedRecipe> savedRecipes = savedRecipesRepo.findByUserId(sessionUser.getUid());
+        if (savedRecipes.isEmpty()) {
+            System.out.println("No saved recipes found for user ID: " + sessionUser.getUid());
+        } else {
+            System.out.println("Saved recipes found for user ID: " + sessionUser.getUid() + ", Count: " + savedRecipes.size());
+        }
+    
+        model.addAttribute("savedRecipes", savedRecipes);
+        return "main/saved"; 
+    }
+
+    // Sample DTO class for recipe details
+    public class RecipeDetailsDto {
+        private String uri;
+        private String label;
+        private String imageUrl;
+        // Constructor, getters, setters
+    }
+
+    // Sample method to fetch recipe details
+    public RecipeDetailsDto getRecipeDetailsByUri(String uri) {
+        // Fetch and return recipe details based on the URI
+        // This is pseudocode and needs to be replaced with your actual data fetching logic
+        return new RecipeDetailsDto();
+    }
+
+    
 }

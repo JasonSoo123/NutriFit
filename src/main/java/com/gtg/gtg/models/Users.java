@@ -36,8 +36,8 @@ public class Users {
         this.birthday = birthday;
     }
 
-    public int getUid() {
-        return uid;
+    public Long getUid() {
+        return (long) uid;
     }
 
     public void setUid(int uid) {
