@@ -20,7 +20,7 @@
   
   /* Navigation styling */
   .navbar {
-    background-color: #a8dadc;
+    background-color: #deebe1;
     color: #457b9d;
     display: flex;
     align-items: center;
@@ -132,7 +132,7 @@
   }
   
   .footer span {
-    color: #a8dadc;
+    color: #deebe1;
   }
   
 /* Results section styling */
@@ -189,5 +189,16 @@
   background-color: #218838;
   border-color: #1e7e34;
 }
-  
-  
+    
+.logout-btn {
+  padding: 5px 15px;
+  border: 1px solid #457b9d; /* Matching your navbar color scheme */
+  background-color: transparent;
+  color: #457b9d;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #457b9d;
+  color: #fff;
+}
