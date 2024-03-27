@@ -18,8 +18,9 @@
   </header>
 
   <div class="container">
+    <!-- Search form -->
     <form th:action="@{/search-recipe}" method="post">
-      <!-- Calories range input -->
+      <!-- Your search form elements here -->
       <div class="row">
         <div class="col">
           <label for="caloriesFrom">Calories From:</label>
@@ -39,9 +40,8 @@
       <div class="form-group">
         <label>Diet:</label>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="vegetarian" name="health" value="vegetarian">
+          <input class="form-check-input" type="checkbox" id="vegetarian" name="diet" value="vegetarian">
           <label class="form-check-label" for="vegetarian">Vegetarian</label>
-          
         </div>
       </div>
       <!-- Allergies checkboxes -->
@@ -54,76 +54,45 @@
       </div>
       <button type="submit" class="btn btn-primary">Search</button>
     </form>
-    
-<!-- Section for displaying search results -->
-<div th:if="${not #lists.isEmpty(recipes)}" class="row">
-  <div th:each="hit : ${recipes}" class="col-md-12">
-    <div class="recipe card mb-4 box-shadow">
-      <div class="card-body">
-        <h2 class="card-title" th:text="${hit.recipe.label}">Recipe Label</h2>
-        <img th:src="${hit.recipe.image}" alt="Recipe Image" class="img-thumbnail custom-img-size">
-        
-        <div class="recipe-details">
-          <div class="diet-health">
-            <h3>Diet Labels</h3>
-            <p th:each="diet : ${hit.recipe.dietLabels}" th:text="${diet}">Diet Label</p>
-            
-            <h3>Health Labels</h3>
-            <p th:each="health : ${hit.recipe.healthLabels}" th:text="${health}">Health Label</p>
-            
-            <h3>Cautions</h3>
-            <p th:each="caution : ${hit.recipe.cautions}" th:text="${caution}">Caution</p>
-          </div>
 
-          <div class="ingredients">
-            <h3>Ingredients</h3>
-            <ul>
-              <li th:each="ingredientLine : ${hit.recipe.ingredientLines}" th:text="${ingredientLine}">Ingredient Line</li>
-            </ul>
-          </div>
-
-          <div class="calories-cuisine">
-            <h3>Calories</h3>
-            <p th:text="${hit.recipe.calories} + ' kcal'">Calories</p>
+    <!-- Section for displaying search results -->
+    <div th:if="${not #lists.isEmpty(recipes)}" class="row">
+      <div th:each="hit, iterStat : ${recipes}" class="col-md-12">
+        <div class="recipe card mb-4 box-shadow">
+          <div class="card-body">
+            <h2 class="card-title" th:text="${hit.recipe.label}">Recipe Label</h2>
+            <img th:src="${hit.recipe.image}" alt="Recipe Image" class="img-thumbnail custom-img-size">
             
-            <h3>Cuisine Type</h3>
-            <p th:each="cuisine : ${hit.recipe.cuisineType}" th:text="${cuisine}">Cuisine Type</p>
-          </div>
-
-          <div class="meal-dish">
-            <h3>Meal Type</h3>
-            <p th:each="meal : ${hit.recipe.mealType}" th:text="${meal}">Meal Type</p>
+            <!-- Display ingredient lines -->
+            <div class="ingredients">
+              <h3>Ingredients</h3>
+              <ul>
+                <li th:each="ingredientLine : ${hit.recipe.ingredientLines}" th:text="${ingredientLine}">Ingredient Line</li>
+              </ul>
+            </div>
             
-            <h3>Dish Type</h3>
-            <p th:each="dish : ${hit.recipe.dishType}" th:text="${dish}">Dish Type</p>
-          </div>
+            <!-- Display nutritional values -->
+            <div class="nutrition">
+              <h3>Nutritional Values</h3>
+              <p>Calories: <span th:text="${hit.recipe.calories}"></span> kcal</p>
+              <!-- Add more nutritional values as needed -->
+            </div>
 
-          <!-- Assuming instructions are provided as a list of strings -->
-          <div class="instructions">
-            <h3>Instructions</h3>
-            <ol>
-              <li th:each="instruction : ${hit.recipe.instructions}" th:text="${instruction}">Instruction</li>
-            </ol>
+            <!-- Other recipe details -->
+            <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
+            <button type="button" class="btn btn-primary save-recipe-btn" th:data-recipe-uri="${hit.recipe.uri}" th:data-image-url="${hit.recipe.image}">
+              Save Recipe
+            </button>
+            
           </div>
-          
-          <!-- Link to the full recipe instructions -->
-          <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
-          <button type="button" class="btn btn-success save-recipe-btn" data-recipe-uri="${recipeUri}">Save</button>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div th:if="${#lists.isEmpty(recipes)}">
-  <p>No recipes found or search not yet performed.</p>
-</div>
-
-<form action="/back" method="post" name="backForm">
-  <div class="row justify-content-center">
-      <button type="submit" class ="btn btn-primary">Back</button>
+    <div th:if="${#lists.isEmpty(recipes)}">
+      <p>No recipes found or search not yet performed.</p>
     </div>
-</form>
+  </div>
 
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>

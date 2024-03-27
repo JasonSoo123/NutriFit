@@ -296,37 +296,44 @@ public class UsersController {
 
 
     @PostMapping("/save-recipe")
-public ResponseEntity<String> saveRecipe(HttpServletRequest request, @RequestBody Map<String, String> payload) {
-    Users sessionUser = (Users)request.getSession().getAttribute("session_user");
-    if (sessionUser == null) {
-        return new ResponseEntity<>("User must be logged in to save recipes.", HttpStatus.FORBIDDEN);
+    public ResponseEntity<String> saveRecipe(HttpServletRequest request, @RequestBody Map<String, String> payload) {
+        Users sessionUser = (Users) request.getSession().getAttribute("session_user");
+        if (sessionUser == null) {
+            return new ResponseEntity<>("User must be logged in to save recipes.", HttpStatus.FORBIDDEN);
+        }
+    
+        String recipeUri = payload.get("recipeUri");
+        if (recipeUri == null || recipeUri.isEmpty()) {
+            return new ResponseEntity<>("Recipe URI is required.", HttpStatus.BAD_REQUEST);
+        }
+    
+        try {
+            // Debugging: log the user ID and recipe URI
+            System.out.println("Checking for existing recipe. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+    
+            // Check if the recipe already exists for the user
+            boolean recipeExists = savedRecipesRepo.existsByUserIdAndRecipeUri(sessionUser.getUid(), recipeUri);
+            if (recipeExists) {
+                System.out.println("Recipe already saved. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+                return new ResponseEntity<>("Recipe already saved.", HttpStatus.BAD_REQUEST);
+            }
+    
+            // Create a new SavedRecipe entity and save it to the repository
+            SavedRecipe savedRecipe = new SavedRecipe();
+            savedRecipe.setUserId(sessionUser.getUid());
+            savedRecipe.setRecipeUri(recipeUri);
+            savedRecipesRepo.save(savedRecipe);
+    
+            System.out.println("Recipe saved successfully. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
+            return new ResponseEntity<>("Recipe saved successfully.", HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.err.println("Error saving recipe: " + e.getMessage());
+            return new ResponseEntity<>("An error occurred while saving the recipe.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
-    String recipeUri = payload.get("recipeUri");
-    if (recipeUri == null || recipeUri.isEmpty()) {
-        return new ResponseEntity<>("Recipe URI is required.", HttpStatus.BAD_REQUEST);
-    }
 
-    // Debugging: log the user ID and recipe URI
-    System.out.println("Checking for existing recipe. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
-    
-    // boolean recipeExists = savedRecipesRepo.existsByUserIdAndRecipeUri(sessionUser.getUid(), recipeUri);
-    // if (recipeExists) {
-    //     System.out.println("Recipe already saved. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
-    //     return new ResponseEntity<>("Recipe already saved.", HttpStatus.BAD_REQUEST);
-    // }
 
-    // Debugging: log the actual save attempt
-    System.out.println("Saving recipe. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
-
-    SavedRecipe savedRecipe = new SavedRecipe();
-    savedRecipe.setUserId(sessionUser.getUid());
-    savedRecipe.setRecipeUri(recipeUri);
-    savedRecipesRepo.save(savedRecipe);
-
-    System.out.println("Recipe saved successfully. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);
-    return new ResponseEntity<>("Recipe saved successfully.", HttpStatus.CREATED);
-    }
 
 
     @RequestMapping("/saved")
@@ -353,13 +360,17 @@ public ResponseEntity<String> saveRecipe(HttpServletRequest request, @RequestBod
         private String label;
         private String imageUrl;
         // Constructor, getters, setters
+
+        RecipeDetailsDto(String uri){
+            this.uri = uri;
+        }
     }
 
     // Sample method to fetch recipe details
     public RecipeDetailsDto getRecipeDetailsByUri(String uri) {
         // Fetch and return recipe details based on the URI
         // This is pseudocode and needs to be replaced with your actual data fetching logic
-        return new RecipeDetailsDto();
+        return new RecipeDetailsDto(uri);
     }
 
     
