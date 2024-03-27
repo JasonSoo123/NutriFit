@@ -238,7 +238,7 @@ public class UsersController {
         return "main/shopping"; // Path to the shopping template
     }
 
-    @Value("${edamam.api.id}")
+ @Value("${edamam.api.id}")
     private String apiId;
 
     @Value("${edamam.api.key}")
@@ -251,7 +251,7 @@ public class UsersController {
                                Model model) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.edamam.com/api/recipes/v2")
                 .queryParam("type", "public")
-                .queryParam("q", "") // Placeholder for the ingredient, will be set after encoding
+                .queryParam("q", ingredient)
                 .queryParam("app_id", apiId)
                 .queryParam("app_key", apiKey);
     
@@ -265,17 +265,7 @@ public class UsersController {
             builder.queryParam("health", healthLabels);
         }
     
-        try {
-            String encodedIngredient = URLEncoder.encode(ingredient.trim(), "UTF-8");
-            builder.replaceQueryParam("q", encodedIngredient); // Replace placeholder with encoded value
-            System.out.println("Encoded Ingredient: " + encodedIngredient); // Debug log
-        } catch (UnsupportedEncodingException e) {
-            model.addAttribute("error", "Error encoding ingredients");
-            return "main/meals";
-        }
-    
-        String urlTemplate = builder.build().encode().toUriString();
-        System.out.println("URL Template: " + urlTemplate); // Debug log
+        String urlTemplate = builder.encode().toUriString();
     
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -298,6 +288,7 @@ public class UsersController {
     
         return "main/meals";
     }
+
 
     @PostMapping("/save-recipe")
 public ResponseEntity<String> saveRecipe(HttpServletRequest request, @RequestBody Map<String, String> payload) {
