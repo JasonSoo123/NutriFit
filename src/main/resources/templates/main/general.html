@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
-  <title>Community Connect</title>
+  <title>General Posts</title>
 </head>
 <body>
   <nav class="navbar">
@@ -18,51 +18,48 @@
   </header>
 
   <div class="container">
-    <!-- Forum categories -->
+    
     <div class="row">
       <div class="col-md-4">
         <h3>Categories</h3>
         <ul class="list-group">
-          <li class="list-group-item"><a href="/general">General</a></li>
-          <li class="list-group-item"><a href="/help">Help</a></li>
-          <!-- Add more categories here if needed -->
+            <li class="list-group-item"><a href="/support">All</a></li>
+            <li class="list-group-item"><a href="/help">Help</a></li>
         </ul>
       </div>
 
-      <!-- New Post Form -->
       <div class="col-md-8">
         <h3>Create New Post</h3>
-        <form action="/post" method="post" name="postForm">
-          <div class="form-group">
-            <label for="postTitle">Title</label>
-            <input type="text" class="form-control" id="postTitle" name="postTitle" required>
-          </div>
-          <div class="form-group">
-            <label for="postCategory">Category</label>
-            <select class="form-control" id="postCategory" name="postCategory">
-              <option value="General">General</option>
-              <option value="Help">Help</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="postContent">Content</label>
-            <textarea class="form-control" id="postContent" name="postContent" rows="4" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Post</button>
-        </form>
+        <form action="/postInGeneral" method="post" name="postForm">
+            <div class="form-group">
+              <label for="postTitle">Title</label>
+              <input type="text" class="form-control" id="postTitle" name="postTitle" required>
+            </div>
+            <div class="form-group">
+              <label for="postCategory">Category</label>
+              <select class="form-control" id="postCategory" name="postCategory">
+                <option value="General">General</option>
+                <option value="Help">Help</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="postContent">Content</label>
+              <textarea class="form-control" id="postContent" name="postContent" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+          </form>
       </div>
     </div>
 
-    <!-- Forum posts -->
     <div class="row mt-4">
       <div class="col-md-12">
-        <h3>Latest Posts</h3>
+        <h3>Latest General Posts</h3>
         <div class="card" th:each="Post:${post}">
-          <div class="card-body">
-            <h5 class="card-title" th:text="${Post.title}"></h5>
-            <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
-            <p th:text="${Post.content}"></p>
-          </div>
+            <div class="card-body">
+              <h5 class="card-title" th:text="${Post.title}"></h5>
+              <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
+              <p th:text="${Post.content}"></p>
+            </div>
         </div>
       </div>
     </div>    

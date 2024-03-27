@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gtg.gtg.RecipeResult; // Ensure RecipeResult is in the com.gtg.gtg package
+import com.gtg.gtg.models.Post;
+import com.gtg.gtg.models.PostRepository;
 import com.gtg.gtg.models.SavedRecipe;
 import com.gtg.gtg.models.SavedRecipesRepository;
 import com.gtg.gtg.models.Users;
@@ -45,6 +49,88 @@ public class UsersController {
     @Autowired
    private SavedRecipesRepository savedRecipesRepo;
 
+    @Autowired
+    private PostRepository postRepository;
+
+    @GetMapping("/support")
+    public String showSupportPage(Model model) {
+
+        List<Post> allPosts = postRepository.findAll();
+        Collections.reverse(allPosts); // make it the latest first
+        model.addAttribute("post", allPosts);
+        return "main/support"; 
+    }
+
+    @GetMapping("/general")
+    public String getGeneralPage(Model model) {
+
+        List<Post> allGeneralPosts = postRepository.findByCategoryType("General");
+        Collections.reverse(allGeneralPosts);
+        model.addAttribute("post", allGeneralPosts);
+        return "main/general";
+    }
+
+    @GetMapping("/help")
+    public String getHelpPage(Model model){
+
+        List<Post> allHelpPosts = postRepository.findByCategoryType("Help");
+        Collections.reverse(allHelpPosts);
+        model.addAttribute("post", allHelpPosts);
+        return "main/help";
+    }
+
+    @PostMapping("/back")
+    public String goBackToMain(Model model, HttpServletRequest request){
+        Users sessionUser = (Users) request.getSession().getAttribute("session_user");
+
+        model.addAttribute("user", sessionUser);
+        return "main/main";
+    }
+
+    @PostMapping("/post")
+    public String addPost(@RequestParam("postTitle") String title,
+                          @RequestParam("postCategory") String category,
+                          @RequestParam("postContent") String content) {
+       
+        Post post = new Post();
+        post.setTitle(title);
+        post.setCategoryType(category);
+        post.setContent(content); 
+       
+        postRepository.save(post);
+        
+        return "redirect:/support";
+    }
+
+    @PostMapping("/postInGeneral")
+    public String addPostInGeneral(@RequestParam("postTitle") String title,
+                          @RequestParam("postCategory") String category,
+                          @RequestParam("postContent") String content) {
+       
+        Post post = new Post();
+        post.setTitle(title);
+        post.setCategoryType(category);
+        post.setContent(content); 
+       
+        postRepository.save(post);
+        
+        return "redirect:/general";
+    }
+
+    @PostMapping("/postInHelp")
+    public String addPostInHelp(@RequestParam("postTitle") String title,
+                          @RequestParam("postCategory") String category,
+                          @RequestParam("postContent") String content) {
+       
+        Post post = new Post();
+        post.setTitle(title);
+        post.setCategoryType(category);
+        post.setContent(content); 
+       
+        postRepository.save(post);
+        
+        return "redirect:/help";
+    }
    @GetMapping("/")
    public RedirectView process(){
     return new RedirectView("login");
@@ -54,7 +140,6 @@ public class UsersController {
     public String getLoginPage() {
         return "main/login";
     }
-   
 
     @GetMapping("/add")
     public String getSignUpPage(){
@@ -146,11 +231,6 @@ public class UsersController {
     @GetMapping("/progress")
     public String showProgressPage() {
         return "main/progress"; // Path to the progress template
-    }
-
-    @GetMapping("/support")
-    public String showSupportPage() {
-        return "main/support"; // Path to the support template
     }
 
     @GetMapping("/shopping")
