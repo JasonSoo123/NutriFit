@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
@@ -53,6 +54,7 @@ public class UsersController {
 
     @Autowired
     private PostRepository postRepository;
+
 
     @GetMapping("/support")
     public String showSupportPage(Model model) {
@@ -136,6 +138,10 @@ public class UsersController {
    @GetMapping("/")
    public RedirectView process(){
     return new RedirectView("login");
+   }
+   
+   public @ResponseBody String test(){
+    return "test";
    }
 
     @GetMapping("/login")
