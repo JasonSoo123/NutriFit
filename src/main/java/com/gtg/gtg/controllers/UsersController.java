@@ -39,6 +39,8 @@ import com.gtg.gtg.models.UsersRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class UsersController {
@@ -249,29 +251,34 @@ public class UsersController {
                                @RequestParam(required = false) List<String> diet,
                                @RequestParam(required = false) List<String> health,
                                Model model) {
+        
+        // Create a URL with query parameters
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.edamam.com/api/recipes/v2")
                 .queryParam("type", "public")
                 .queryParam("q", ingredient)
                 .queryParam("app_id", apiId)
                 .queryParam("app_key", apiKey);
     
-        // Join diet and health lists with commas if they are not empty
-        if (diet != null && !diet.isEmpty()) {
-            String diets = String.join(",", diet);
-            builder.queryParam("diet", diets);
-        }
-        if (health != null && !health.isEmpty()) {
-            String healthLabels = String.join(",", health);
-            builder.queryParam("health", healthLabels);
+        if (diet != null) {
+            for (String dietType : diet) {
+                // The API expects diet preferences to be in a certain format
+                builder.queryParam("diet", dietType.toLowerCase());
+            }
         }
     
-        String urlTemplate = builder.encode().toUriString();
+        if (health != null) {
+            for (String healthLabel : health) {
+                // The API expects health labels to be in a certain format
+                builder.queryParam("health", healthLabel.toLowerCase());
+            }
+        }
+    
+        String urlTemplate = builder.build().encode().toUriString();
     
         RestTemplate restTemplate = new RestTemplate();
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(urlTemplate, String.class);
-    
-            if(response.getStatusCode() == HttpStatus.OK) {
+            if (response.getStatusCode() == HttpStatus.OK) {
                 ObjectMapper mapper = new ObjectMapper();
                 RecipeResult recipeResult = mapper.readValue(response.getBody(), RecipeResult.class);
                 model.addAttribute("recipes", recipeResult.getHits());
@@ -280,10 +287,8 @@ public class UsersController {
             }
         } catch (HttpClientErrorException e) {
             model.addAttribute("error", "API request error: " + e.getMessage());
-            e.printStackTrace();
         } catch (IOException e) {
             model.addAttribute("error", "Error parsing recipe data");
-            e.printStackTrace();
         }
     
         return "main/meals";
