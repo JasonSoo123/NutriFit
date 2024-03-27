@@ -19,6 +19,18 @@ Mar 12th - Updated the Login page and Sign Up page
 ![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 1.21.02 PM.png>)
 ![alt text](<src/main/resources/static/images/Screenshot 2024-03-12 at 1.21.12 PM.png>)
 
+Mar 22nd - Improved main page and added link for each feature button, Error message when wrong password or username at login, able to delete users in admin page
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-26 at 9.51.25 PM.png>)
+Mar 23rd - Added Edamam API for Recipe Finder Feature, implement the Feature 1 button done
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-26 at 9.51.32 PM.png>)
+Mar 24th - Had Error in render, fixed by git add .
+
+Mar 25th - Have some implementation for saved meals (not working yet)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-26 at 9.51.44 PM.png>)
+Mar 26th - Fixed and Updated some UI, Added the Community Connect Feature, Added a back button for all feature pages.
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-26 at 9.51.57 PM.png>)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-26 at 9.52.01 PM.png>)
+![alt text](<src/main/resources/static/images/Screenshot 2024-03-26 at 9.52.15 PM.png>)
 Group Project Proposal: NutriFit
 
 NutriFit is designed to revolutionize the way individuals with specific fitness goals approach nutrition and meal planning. By catering to unique dietary needs and fitness objectives, this web app aims to simplify the journey towards a healthier lifestyle. Whether users are looking to gain muscle, lose weight, or maintain a balanced diet to support an active lifestyle, our solution offers personalized guidance every step of the way. 
