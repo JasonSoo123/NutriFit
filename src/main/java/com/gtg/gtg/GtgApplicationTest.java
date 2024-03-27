@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TestingWebApplicationTest {
+class GtgApplicationTest {
 
     @Autowired
 	private MockMvc mockMvc;
