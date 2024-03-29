@@ -337,10 +337,6 @@ public class UsersController {
             return new ResponseEntity<>("An error occurred while saving the recipe.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-
-
-
 
     @RequestMapping("/saved")
     public String showSavedRecipes(HttpServletRequest request, Model model) {
@@ -364,7 +360,7 @@ public class UsersController {
     public class RecipeDetailsDto {
         private String uri;
         private String label;
-        private String imageUrl;
+        // private String imageUrl;
         // Constructor, getters, setters
 
         RecipeDetailsDto(String uri){
