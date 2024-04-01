@@ -68,3 +68,15 @@ header img {
     border-radius: 0.5rem;
     margin: 0.5rem;
 }
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
