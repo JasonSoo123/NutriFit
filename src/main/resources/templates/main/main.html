@@ -13,49 +13,75 @@
     <a href="/logout" class="btn logout-btn">Logout</a>
   </nav>
 
-  <header class="header">
-    <h1>Welcome to NutriFit</h1>
-    <p>Your path to a healthy lifestyle.</p>
+  <!-- Enhanced header with larger title and better spacing -->
+  <header class="header text-center" style="padding: 2rem 0; background-color: #f8f9fa;">
+    <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem;">Welcome to NutriFit</h1>
+    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Your path to a healthy lifestyle.</p>
     <p class="welcome fade-in" th:text="'Welcome back, ' + ${user.name} + '!'"></p>
   </header>
 
-  <div class="container features">
-    <!-- Feature 1 - Personalized Meal Plans -->
-    <a th:href="@{/meals}" class="feature-item-link">
-      <div class="feature-item">
-        <h3>Recipe Finder</h3>
-        <p>Expert recipe finder tailored to support your fitness goals and dietary preferences.</p>
-      </div>
-    </a>
-    <a th:href="@{/saved}" class="feature-item-link">
-      <div class="feature-item">
-        <h3>My Meals</h3>
-        <p>Access all the meals you saved to cook up.</p>
-      </div>
-    </a>
-    <a th:href="@{/support}" class="feature-item-link">
-      <div class="feature-item">
-        <h3>Community Connect</h3>
-        <p>Connect with peers and experts to share experiences and plans.</p>
-      </div>
-    </a>
-    <a th:href="@{/shopping}" class="feature-item-link">
-      <div class="feature-item">
-        <h3>Shopping Simplified</h3>
-        <p>Find all the grocery stores near you.</p>
-      </div>
-    </a>
-  </div>
-  
+  <div class="container px-4 mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
+      <!-- Recipe Finder Card -->
+      <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="card-body text-center">
+          <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Recipe Finder</h2>
+          <p style="margin-bottom: 1.5rem;">Expert recipe finder tailored to support your fitness goals and dietary preferences.</p>
+          <div class="card-actions justify-center">
+            <a href="/meals" class="btn btn-primary">Explore</a>
+          </div>
+        </div>
+      </div>
+
+    <!-- My Meals Card -->
+    <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="card-body text-center">
+        <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">My Meals</h2>
+        <p style="margin-bottom: 1.5rem;">Access your personal library of meals you saved to cook up.</p>
+        <div class="card-actions justify-center">
+          <a href="/saved" class="btn btn-primary">View Meals</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Connect Card -->
+    <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="card-body text-center">
+        <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Community Connect</h2>
+        <p style="margin-bottom: 1.5rem;">Connect with peers and experts to share experiences and plans.</p>
+        <div class="card-actions justify-center">
+          <a href="/support" class="btn btn-primary">Connect</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shopping Simplified Card -->
+    <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="card-body text-center">
+        <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Shopping Simplified</h2>
+        <p style="margin-bottom: 1.5rem;">Find all the grocery stores near you so you can get the ingredients you need.</p>
+        <div class="card-actions justify-center">
+          <a href="/shopping" class="btn btn-primary">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>
 
-  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      plugins: [require('daisyui')],
+    }
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function(event) { 
       var fadeInElements = document.querySelectorAll('.fade-in');
