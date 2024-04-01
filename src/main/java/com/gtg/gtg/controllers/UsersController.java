@@ -39,6 +39,7 @@ import com.gtg.gtg.models.UsersRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,8 +146,28 @@ public class UsersController {
    }
 
     @GetMapping("/login")
-    public String getLoginPage() {
-        return "main/login";
+    public String getLoginPage(Model model, HttpServletRequest request, HttpSession session) {
+        Users user = (Users) session.getAttribute("session_user");
+        if (user == null) {
+
+            return "main/login";
+
+        } else {
+            if (user.getUsertype() == 0) {
+
+                List<Users> users = UsersRepo.findByUsertype(1);
+                model.addAttribute("adminUser", user); // Add the admin user to the model
+                model.addAttribute("users", users); // Add the list of all users to the model
+
+                return "main/admin";
+
+            } else {
+                
+                model.addAttribute("user", user);
+                return "main/main"; // Change to the path of your protected page
+
+            }
+        }
     }
 
     @GetMapping("/add")
@@ -174,8 +195,8 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletRequest request, Model model) {
-        
+    public String processLogin(@RequestParam Map<String, String> userMap, HttpServletRequest request, Model model, HttpSession session) {
+       
         String username = userMap.get("username");
         String password = userMap.get("password");
 
@@ -226,9 +247,15 @@ public class UsersController {
         return "main/admin"; // Redirect to admin page after deletion
     }
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletResponse response, HttpServletRequest request) {
+        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+        response.setHeader("Pragma","no-cache");
+        response.setDateHeader("Expires", 0);
+        Users user = (Users)request.getSession().getAttribute("session_user");
+        System.out.println("Logging out User " + user.getUsername());
         request.getSession().invalidate();
-        return "main/login"; // Adjust the path as necessary
+
+        return "redirect:/login"; // Redirect to the login page after logout
     }
 
     @GetMapping("/meals")
@@ -374,6 +401,4 @@ public class UsersController {
         // This is pseudocode and needs to be replaced with your actual data fetching logic
         return new RecipeDetailsDto(uri);
     }
-
-    
 }
