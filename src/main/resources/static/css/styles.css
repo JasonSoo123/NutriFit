@@ -40,7 +40,7 @@
   /* Header/main top area styling */
   .header {
     text-align: center;
-    padding: 60px 20px 1px; /* Reduced the bottom padding */
+    padding: 60px 20px 0.5px; /* Reduced the bottom padding */
   }
   
   .header h1 {
