@@ -165,3 +165,11 @@ h4, h5, h6 {
   background-color: #457b9d;
   color: #fff;
 }
+
+#logoButton img {
+  transition: transform 0.2s ease-in-out;
+}
+
+#logoButton:hover img {
+  transform: scale(1.1);
+}

@@ -8,10 +8,14 @@
   <title>Help Posts</title>
 </head>
 <body>
-  <nav class="navbar">
-    <img src="/images/NFLogo.png" alt="NutriFit Logo">
-    <a href="/logout" class="btn logout-btn">Logout</a>
-  </nav>
+  <form action="/back" method="post" name="backForm">
+    <nav class="navbar">
+      <button type="submit" class="navbar-brand btn btn-link" id="logoButton">
+        <img src="/images/NFLogo.png" alt="NutriFit Logo">
+      </button>
+      <a href="/logout" class="btn logout-btn">Logout</a>
+    </nav>
+  </form>
 
   <header class="header">
     <h1>Community Connect</h1>
@@ -66,11 +70,6 @@
     </div>    
   </div>
 
-  <form action="/back" method="post" name="backForm">
-    <div class="row justify-content-center">
-        <button type="submit" class ="btn btn-primary">Back</button>
-      </div>
-  </form>
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>
