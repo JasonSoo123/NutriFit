@@ -17,7 +17,7 @@
     </nav>
   </form>
 
-  <header class="header">
+  <header class="header text-center">
     <h1>Community Connect</h1>
   </header>
 
@@ -79,7 +79,7 @@
                 <input type="hidden" name="postUid" th:value="${Post.uid}">
                 <button  type="submit" class="btn btn-danger">Delete</button>
               </form>
-              
+
             </div>
             <div th:if="${Post.username != user.username}">
               <a href="/" class="btn btn-info">Reply</a>
