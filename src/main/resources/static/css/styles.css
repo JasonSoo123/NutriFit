@@ -166,6 +166,53 @@ h4, h5, h6 {
   color: #fff;
 }
 
+.btn.btn-primary {
+  background-color: #10B981; /* Tailwind's green-500 for example */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  font-weight: bold;
+}
+
+.btn.btn-primary:hover {
+  background-color: #059669;
+}
+
+.btn.btn-danger {
+  background-color: lightcoral; /* Tailwind's green-500 for example */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  font-weight: bold;
+}
+
+.btn.btn-danger:hover {
+  background-color: red;
+}
+
+.btn.btn-info {
+  background-color: lightblue; /* Tailwind's green-500 for example */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  font-weight: bold;
+}
+
+.btn.btn-info:hover {
+  background-color: rgb(87, 190, 224);
+}
+
+.btn.btn-secondary {
+  background-color: lightgray; /* Tailwind's green-500 for example */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  font-weight: bold;
+}
+
+.btn.btn-secondary:hover {
+  background-color: gray;
+}
 #logoButton img {
   transition: transform 0.2s ease-in-out;
 }
