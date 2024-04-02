@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
+
   <title>NutriFit Recipe Finder</title>
 </head>
 <body>
@@ -73,6 +74,11 @@
           <li th:each="ingredientLine : ${hit.recipe.ingredientLines}" th:text="${ingredientLine}">Ingredient Line</li>
         </ul>
       </div>
+      <div class="nutrition">
+        <h3 class="text-lg font-semibold">Nutritional Values</h3>
+        <p class="mb-4">Calories: <span th:text="${hit.recipe.calories}"></span> kcal</p>
+        <!-- Add more nutritional values as needed -->
+      </div>
       <div class="flex justify-end space-x-2">
         <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
         <button type="button" class="btn btn-secondary" th:data-recipe-uri="${hit.recipe.url}">Save Recipe</button>
@@ -80,6 +86,7 @@
     </div>
   </div>
 </div>
+
 
 
 
