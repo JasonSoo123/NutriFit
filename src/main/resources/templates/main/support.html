@@ -68,10 +68,15 @@
             <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
             <p th:text="${Post.content}"></p>
 
-            <div th:if="${Post.username == user.username}">       
-                <form action="/deletePost" method="post" name="deletePostForm">
+            <div th:if="${Post.username == user.username}" class="d-flex align-items-center">
 
-                  <a href="/" class="btn btn-primary">Edit</a>
+                <form action="/edit" method="post" name="editForm">
+
+                  <input type="hidden" name="postUid" th:value="${Post.uid}">
+                  <button type="submit" class="btn btn-primary mr-2">Edit</button>
+
+                </form>       
+                <form action="/deletePost" method="post" name="deletePostForm">
 
                   <input type="hidden" name="postUid" th:value="${Post.uid}">
                   <button  type="submit" class="btn btn-danger">Delete</button>

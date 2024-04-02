@@ -303,6 +303,41 @@ public class UsersController {
 
         return "main/admin"; // Redirect to admin page after deletion
     }
+
+    @PostMapping("/edit")
+    public String goToEdit(@RequestParam("postUid") int postUid, Model model) {
+        List<Post> getPost = postRepository.findByUid(postUid);
+        if (!getPost.isEmpty()){
+            Post post = getPost.get(0);
+            model.addAttribute("post", post);
+        }
+        return "main/edit";
+    }
+    @PostMapping("/updatePost")
+    public String updatePost(@RequestParam("postUid") int postUid,
+                             @RequestParam("postTitle") String postTitle,
+                             @RequestParam("postCategory") String postCategory,
+                             @RequestParam("postContent") String postContent,
+                             Model model, HttpServletRequest request) {
+        
+        List<Post> getPost = postRepository.findByUid(postUid);
+        Post post = getPost.get(0);
+        post.setTitle(postTitle);
+        post.setCategoryType(postCategory);
+        post.setContent(postContent);
+        postRepository.save(post);
+        
+        // get the models and go back to main community connect page
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        model.addAttribute("user", sessionUser);
+
+        List<Post> allPosts = postRepository.findAll();
+        Collections.reverse(allPosts);
+        model.addAttribute("post", allPosts);
+
+        return "redirect:/support";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpServletResponse response, HttpServletRequest request) {
         response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
