@@ -1,141 +1,105 @@
 /* Basic reset for styling consistency */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fff;
-    line-height: 1.6;
-    color: #333;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  /* Navigation styling */
-  .navbar {
-    background-color: #deebe1;
-    color: #457b9d;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-  }
-  
-  .navbar a {
-    text-decoration: none;
-    color: #457b9d;
-  }
-  
-  .navbar img {
-    width: 300px; /* Increased size of the logo */
-  }
-  
-  /* Header/main top area styling */
-  .header {
-    text-align: center;
-    padding: 60px 20px 0.5px; /* Reduced the bottom padding */
-  }
-  
-  .header h1 {
-    font-size: 3em; /* Increased size for welcome message */
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .header .tagline {
-    font-size: 1.5em; /* Increased size for tagline */
-    color: #666;
-    margin-bottom: 20px; /* Added space for welcome message */
-  }
-  
-  .header .welcome {
-    font-size: 2em; /* New style for the welcome message */
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .features {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    height: 100%;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .feature-item {
-    width: 240px;
-    margin: 10px;
-    background: #457b9d;
-    color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 7px 0 black;
-    transition: transform 0.3s; 
-  }
+/* Colaborate Font Faces */
+@font-face {
+  font-family: 'Colaborate';
+  src: url('/fonts/ColabBol.woff') format('woff');
+  font-weight: bold;
+}
 
-  .feature-item:hover {
-    transform: scale(1.04); /* Added hover effect */
-  }
+@font-face {
+  font-family: 'Colaborate';
+  src: url('/fonts/ColabLig.woff') format('woff');
+  font-weight: 300; /* Light */
+}
 
-  .feature-item h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-  }
+@font-face {
+  font-family: 'Colaborate';
+  src: url('/fonts/ColabMed.woff') format('woff');
+  font-weight: 500; /* Medium */
+}
 
-  .feature-item p {
-    font-size: 1em;
-  }
+@font-face {
+  font-family: 'Colaborate';
+  src: url('/fonts/ColabReg.woff') format('woff');
+  font-weight: normal; /* Regular */
+}
 
-  .feature-item button {
-    padding: 5px 30px;
-    border: none;
-    background-color: tomato;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 20px;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 0 0 7px 0 black;
-    transition: transform 0.3s;
-  }
+@font-face {
+  font-family: 'Colaborate';
+  src: url('/fonts/ColabThi.woff') format('woff');
+  font-weight: 100; /* Thin */
+}
 
-  .feature-item button:hover {
-    transform: scale(1.04);
-  }
+/* Global styles */
+body {
+  font-family: 'Colaborate', sans-serif;
+  background-color: #fff;
+  line-height: 1.6;
+  color: #333;
+}
 
-  .fade-in {
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
-  }
+/* Headings */
+h1, h2, h3 {
+  font-family: 'Colaborate', sans-serif;
+  font-weight: bold; /* Bold for primary headings */
+}
 
-  .feature-item-link {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* Footer styling */
-  .footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 10px;
-  }
-  
-  .footer span {
-    color: #deebe1;
-  }
-  
-/* Results section styling */
+h4, h5, h6 {
+  font-family: 'Colaborate', sans-serif;
+  font-weight: 500; /* Medium for secondary headings */
+}
+
+/* Text with lighter emphasis */
+.light-text {
+  font-weight: 300; /* Light */
+}
+
+/* Container styling */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Navigation styling */
+.navbar {
+  background-color: #deebe1;
+  color: #457b9d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #457b9d;
+}
+
+.navbar img {
+  width: 300px;
+}
+
+/* Footer styling */
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.footer span {
+  color: #deebe1;
+}
+
+
+/* Recipe card styling */
 .results {
   margin-top: 30px;
 }
@@ -143,20 +107,19 @@
 .recipe {
   margin-bottom: 30px;
   padding: 20px;
-  background: #f0f0f0; /* Light grey background for recipe cards */
-  border-radius: 10px; /* Rounded corners for recipe cards */
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-  transition: box-shadow 0.3s ease-in-out;
+  background: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .recipe:hover {
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Larger shadow on hover for interaction effect */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .recipe img {
   max-width: 100%;
   height: auto;
-  border-radius: 5px; /* Slight rounding on image corners */
+  border-radius: 5px;
   margin-bottom: 15px;
 }
 
@@ -171,28 +134,28 @@
   height: auto;
 }
 
-  /* Media query for responsive design */
-  @media (max-width: 768px) {
-    .features {
-      grid-template-columns: 1fr;
-    }
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .features {
+    flex-direction: column;
   }
-
-
-.save-recipe-btn {
-  background-color: #28a745; /* Adjust the color as needed */
-  border-color: #28a745; /* Adjust the border color as needed */
 }
-  
-/* Hover effect */
+
+/* Save recipe button styling */
+.save-recipe-btn {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
 .save-recipe-btn:hover {
   background-color: #218838;
   border-color: #1e7e34;
 }
-    
+
+/* Logout button styling */
 .logout-btn {
   padding: 5px 15px;
-  border: 1px solid #457b9d; /* Matching your navbar color scheme */
+  border: 1px solid #457b9d;
   background-color: transparent;
   color: #457b9d;
   transition: all 0.3s ease;

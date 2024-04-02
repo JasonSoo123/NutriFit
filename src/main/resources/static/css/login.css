@@ -1,11 +1,56 @@
-/* login.css */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+/* Colaborate Font Faces */
+@font-face {
+    font-family: 'Colaborate';
+    src: url('/fonts/ColabBol.woff') format('woff');
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: 'Colaborate';
+    src: url('/fonts/ColabLig.woff') format('woff');
+    font-weight: 300; /* Light */
+  }
+  
+  @font-face {
+    font-family: 'Colaborate';
+    src: url('/fonts/ColabMed.woff') format('woff');
+    font-weight: 500; /* Medium */
+  }
+  
+  @font-face {
+    font-family: 'Colaborate';
+    src: url('/fonts/ColabReg.woff') format('woff');
+    font-weight: normal; /* Regular */
+  }
+  
+  @font-face {
+    font-family: 'Colaborate';
+    src: url('/fonts/ColabThi.woff') format('woff');
+    font-weight: 100; /* Thin */
+  }
+  
+  /* Basic reset for styling consistency */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Colaborate', sans-serif;
+    background-color: #DEEBE1; 
+    line-height: 1.6;
+    color: #333;
+  }
 
-/* Body and overall page styling */
-body {
-  font-family: 'Open+Sans', sans-serif;
-  background-color: #DEEBE1; /* Set the background color */
-}
+  /* Apply specific font weights to headings */
+    h1, h2, h3 {
+        font-weight: bold; /* Use bold for primary headings */
+    }
+  
+  h4, h5, h6 {
+    font-weight: 500; /* Medium for less prominent headings */
+  }
 
 /* Centering the logo */
 header img {
@@ -34,39 +79,11 @@ header img {
   background-color: #059669; /* Tailwind's green-600 for example */
 }
 
-/* Error message styling */
-.error-message {
-  /* Styles will be determined when error functionality is implemented */
-}
-
 /* Footer styling */
 .footer {
   padding: 1rem;
   color: #6B7280; /* Tailwind's gray-500 for example */
   font-size: 0.875rem; /* Tailwind's text-sm */
-}
-
-/* Animation for the error popup */
-@keyframes slideIn {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.animate-popup {
-    animation: slideIn 0.5s ease-in-out forwards;
-}
-
-/* Add this inside your existing .alert class if you want to keep other styles */
-#error-popup {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
-    margin: 0.5rem;
 }
 
 .navbar {
