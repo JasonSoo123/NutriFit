@@ -58,13 +58,28 @@
 
     <div class="row mt-4">
       <div class="col-md-12">
-        <h3>Latest Help Posts</h3>
+        <h3>Latest Posts</h3>
         <div class="card" th:each="Post:${post}">
-            <div class="card-body">
-              <h5 class="card-title" th:text="${Post.title}"></h5>
-              <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
-              <p th:text="${Post.content}"></p>
+          <div class="card-body">
+            <h5 class="card-title" th:text="${Post.title}"></h5>
+            <p class="card-text"><strong>Username:</strong> [[${Post.username}]]</p>
+            <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
+            <p th:text="${Post.content}"></p>
+
+            <div th:if="${Post.username == user.username}">       
+              <form action="/deletePostInHelp" method="post" name="deletePostForm">
+
+                <a href="/" class="btn btn-primary">Edit</a>
+
+                <input type="hidden" name="postUid" th:value="${Post.uid}">
+                <button  type="submit" class="btn btn-danger">Delete</button>
+              </form>
+          </div>
+            <div th:if="${Post.username != user.username}">
+              <a href="/" class="btn btn-info">Reply</a>
             </div>
+
+          </div>
         </div>
       </div>
     </div>    

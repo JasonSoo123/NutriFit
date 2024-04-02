@@ -56,9 +56,49 @@ public class UsersController {
     @Autowired
     private PostRepository postRepository;
 
+    @PostMapping("/deletePost")
+    public String deletePost(@RequestParam("postUid") int postUid) {
+
+        List<Post> postToDelete = postRepository.findByUid(postUid);
+        if (!postToDelete.isEmpty()) {
+            Post toDelete = postToDelete.get(0);
+            postRepository.delete(toDelete);
+    
+        } 
+
+        return "redirect:/support"; 
+    }
+
+    @PostMapping("/deletePostInGeneral")
+    public String deletePostInGeneral(@RequestParam("postUid") int postUid) {
+
+        List<Post> postToDelete = postRepository.findByUid(postUid);
+        if (!postToDelete.isEmpty()) {
+            Post toDelete = postToDelete.get(0);
+            postRepository.delete(toDelete);
+    
+        } 
+
+        return "redirect:/general"; 
+    }
+
+    @PostMapping("/deletePostInHelp")
+    public String deletePostInHelp(@RequestParam("postUid") int postUid) {
+
+        List<Post> postToDelete = postRepository.findByUid(postUid);
+        if (!postToDelete.isEmpty()) {
+            Post toDelete = postToDelete.get(0);
+            postRepository.delete(toDelete);
+    
+        } 
+
+        return "redirect:/help"; 
+    }
 
     @GetMapping("/support")
-    public String showSupportPage(Model model) {
+    public String showSupportPage(Model model, HttpServletRequest request) {
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        model.addAttribute("user", sessionUser);
 
         List<Post> allPosts = postRepository.findAll();
         Collections.reverse(allPosts); // make it the latest first
@@ -67,7 +107,9 @@ public class UsersController {
     }
 
     @GetMapping("/general")
-    public String getGeneralPage(Model model) {
+    public String getGeneralPage(Model model, HttpServletRequest request) {
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        model.addAttribute("user", sessionUser);
 
         List<Post> allGeneralPosts = postRepository.findByCategoryType("General");
         Collections.reverse(allGeneralPosts);
@@ -76,7 +118,9 @@ public class UsersController {
     }
 
     @GetMapping("/help")
-    public String getHelpPage(Model model){
+    public String getHelpPage(Model model, HttpServletRequest request){
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        model.addAttribute("user", sessionUser);
 
         List<Post> allHelpPosts = postRepository.findByCategoryType("Help");
         Collections.reverse(allHelpPosts);
@@ -95,12 +139,16 @@ public class UsersController {
     @PostMapping("/post")
     public String addPost(@RequestParam("postTitle") String title,
                           @RequestParam("postCategory") String category,
-                          @RequestParam("postContent") String content) {
+                          @RequestParam("postContent") String content, 
+                          HttpServletRequest request) {
        
         Post post = new Post();
         post.setTitle(title);
         post.setCategoryType(category);
-        post.setContent(content); 
+        post.setContent(content);
+        
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        post.setUsername(sessionUser.getUsername());
        
         postRepository.save(post);
         
@@ -110,12 +158,16 @@ public class UsersController {
     @PostMapping("/postInGeneral")
     public String addPostInGeneral(@RequestParam("postTitle") String title,
                           @RequestParam("postCategory") String category,
-                          @RequestParam("postContent") String content) {
+                          @RequestParam("postContent") String content,
+                          HttpServletRequest request) {
        
         Post post = new Post();
         post.setTitle(title);
         post.setCategoryType(category);
-        post.setContent(content); 
+        post.setContent(content);
+        
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        post.setUsername(sessionUser.getUsername());
        
         postRepository.save(post);
         
@@ -125,17 +177,22 @@ public class UsersController {
     @PostMapping("/postInHelp")
     public String addPostInHelp(@RequestParam("postTitle") String title,
                           @RequestParam("postCategory") String category,
-                          @RequestParam("postContent") String content) {
+                          @RequestParam("postContent") String content,
+                          HttpServletRequest request) {
        
         Post post = new Post();
         post.setTitle(title);
         post.setCategoryType(category);
         post.setContent(content); 
+
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        post.setUsername(sessionUser.getUsername());
        
         postRepository.save(post);
         
         return "redirect:/help";
     }
+
    @GetMapping("/")
    public RedirectView process(){
     return new RedirectView("login");

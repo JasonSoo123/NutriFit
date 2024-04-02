@@ -12,15 +12,17 @@ public class Post {
     private String title;
     private String categoryType; 
     private String content;
+    private String username;
 
     public Post() {
     }
 
-    public Post(int uid, String title, String categoryType, String content) {
+    public Post(int uid, String title, String categoryType, String content, String username) {
         this.uid = uid;
         this.title = title;
         this.categoryType = categoryType;
         this.content = content;
+        this.username = username;
     }
 
     public int getUid() {
@@ -53,5 +55,14 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }  
+    
 }
