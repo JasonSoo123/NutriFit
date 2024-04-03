@@ -428,6 +428,8 @@ public class UsersController {
         }
     
         String recipeUri = payload.get("recipeUri");
+        String recipeName = payload.get("recipeTitle");
+        String recipeImage = payload.get("recipeImage");
         if (recipeUri == null || recipeUri.isEmpty()) {
             return new ResponseEntity<>("Recipe URI is required.", HttpStatus.BAD_REQUEST);
         }
@@ -447,6 +449,7 @@ public class UsersController {
             SavedRecipe savedRecipe = new SavedRecipe();
             savedRecipe.setUserId(sessionUser.getUid());
             savedRecipe.setRecipeUri(recipeUri);
+
             savedRecipesRepo.save(savedRecipe);
     
             System.out.println("Recipe saved successfully. User ID: " + sessionUser.getUid() + ", Recipe URI: " + recipeUri);

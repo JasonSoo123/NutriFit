@@ -78,7 +78,11 @@
 
           <div class="mt-auto">
             <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
-            <button type="button" class="btn btn-secondary" id="save-recipe-btn" th:data-recipe-url="${hit.recipe.url}">Save Recipe</button>
+            <button type="button" class="btn btn-secondary" id="save-recipe-btn"
+            th:data-recipe-uri="${hit.recipe.url}"
+            th:data-recipe-title="${hit.recipe.label}"
+            th:data-recipe-image="${hit.recipe.image}">Save Recipe</button>
+          
           </div>
         </div>
       </div>

@@ -15,6 +15,28 @@ public class SavedRecipe {
     @Column(name = "recipe_uri", nullable = false)
     private String recipeUri;
 
+    @Column(name = "recipe_image", nullable = false)
+    private String recipeImage;
+
+    @Column(name = "recipe_name", nullable = false)
+    private String recipeName;
+
+    public String getRecipeImage() {
+        return recipeImage;
+    }
+
+    public void setRecipeImage(String recipeImage) {
+        this.recipeImage = recipeImage;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
     // Constructors
     public SavedRecipe() {}
 
