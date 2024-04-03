@@ -448,6 +448,8 @@ public class UsersController {
             // Create a new SavedRecipe entity and save it to the repository
             SavedRecipe savedRecipe = new SavedRecipe();
             savedRecipe.setUserId(sessionUser.getUid());
+            savedRecipe.setRecipeName(recipeName);
+            savedRecipe.setRecipeImage(recipeImage);
             savedRecipe.setRecipeUri(recipeUri);
 
             savedRecipesRepo.save(savedRecipe);

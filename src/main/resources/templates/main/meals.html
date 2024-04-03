@@ -103,34 +103,43 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
       document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
-        button.addEventListener('click', function () {
-          // Add an alert to indicate the button is pressed
-          //alert('Save button pressed!');
-          
-          var recipeUri = this.getAttribute('data-recipe-url'); // Ensure your button has this attribute
-          fetch('/save-recipe', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              // If you're using CSRF protection, you need to include the CSRF token here.
-            },
-            body: JSON.stringify({ recipeUri: recipeUri })
-          })
-          .then(response => {
-            if (response.ok) {
-              alert('Recipe saved successfully!');
-            } else {
-              response.text().then(text => { alert(text); });
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-          });
-        });
+    document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var recipeUri = this.getAttribute('data-recipe-uri'); // Get the recipe URI
+      var recipeTitle = this.getAttribute('data-recipe-title'); // Get the recipe title
+      var recipeImage = this.getAttribute('data-recipe-image'); // Get the recipe image URL
+
+      // Create an object with the data to be saved
+      var dataToSave = {
+        recipeUri: recipeUri,
+        recipeTitle: recipeTitle,
+        recipeImage: recipeImage
+      };
+
+      // Perform a fetch request to save the data
+      fetch('/save-recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // If you're using CSRF protection, you need to include the CSRF token here.
+        },
+        body: JSON.stringify(dataToSave) // Send the data as JSON
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Recipe saved successfully!');
+        } else {
+          response.text().then(text => { alert(text); });
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
       });
     });
+  });
+});
+
 
     </script>
 </body>
