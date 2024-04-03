@@ -41,7 +41,7 @@
       <!-- Ingredients input -->
       <div class="form-group">
         <label for="ingredient">Ingredients (comma separated):</label>
-        <input type="text" class="form-control" id="ingredient" name="ingredient" placeholder="chicken,lettuce,tomato" required>
+        <input type="text" class="form-control" id="ingredient" name="ingredient" placeholder="e.g. chicken,lettuce,tomato" required>
       </div>
       <!-- Diet checkboxes -->
       <div class="form-group">
@@ -66,7 +66,7 @@
     <div th:if="${not #lists.isEmpty(recipes)}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div th:each="hit, iterStat : ${recipes}" class="overflow-hidden rounded-lg shadow-lg bg-white max-h-150">
         <figure class="bg-green-400">
-          <img th:src="${hit.recipe.image}" alt="Recipe Image" class="object-cover w-full h-48" />
+          <img th:src="${hit.recipe.image}" alt="Recipe Image" class="object-cover w-full h-50" />
         </figure>
         <div class="p-4 flex flex-col h-96">
           <h2 class="card-title text-2xl font-bold" th:text="${hit.recipe.label}">Recipe Label</h2>
