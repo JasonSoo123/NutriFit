@@ -3,17 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@^1.14.0"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
-  <title>NutriFit Meal Planner</title>
+
+  <title>NutriFit Recipe Finder</title>
 </head>
 <body>
-  <nav class="navbar">
-    <img src="/images/NFLogo.png" alt="NutriFit Logo">
-    <a href="/logout" class="btn logout-btn">Logout</a>
-  </nav>
+  <form action="/back" method="post" name="backForm">
+    <nav class="navbar">
+      <button type="submit" class="navbar-brand btn btn-link" id="logoButton">
+        <img src="/images/NFLogo.png" alt="NutriFit Logo">
+      </button>
+      <a href="/logout" class="btn logout-btn">Logout</a>
+    </nav>
+  </form>
 
-  <header class="header">
+  <header class="header text-center">
     <h1>Find a Recipe</h1>
   </header>
 
@@ -55,80 +62,85 @@
       <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
-    <!-- Section for displaying search results -->
-    <div th:if="${not #lists.isEmpty(recipes)}" class="row">
-      <div th:each="hit, iterStat : ${recipes}" class="col-md-12">
-        <div class="recipe card mb-4 box-shadow">
-          <div class="card-body">
-            <h2 class="card-title" th:text="${hit.recipe.label}">Recipe Label</h2>
-            <img th:src="${hit.recipe.image}" alt="Recipe Image" class="img-thumbnail custom-img-size">
-            
-            <!-- Display ingredient lines -->
-            <div class="ingredients">
-              <h3>Ingredients</h3>
-              <ul>
-                <li th:each="ingredientLine : ${hit.recipe.ingredientLines}" th:text="${ingredientLine}">Ingredient Line</li>
-              </ul>
-            </div>
-            
-            <!-- Display nutritional values -->
-            <div class="nutrition">
-              <h3>Nutritional Values</h3>
-              <p>Calories: <span th:text="${hit.recipe.calories}"></span> kcal</p>
-              <!-- Add more nutritional values as needed -->
-            </div>
+    
+    <div th:if="${not #lists.isEmpty(recipes)}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div th:each="hit, iterStat : ${recipes}" class="overflow-hidden rounded-lg shadow-lg bg-white max-h-150">
+        <figure class="bg-green-400">
+          <img th:src="${hit.recipe.image}" alt="Recipe Image" class="object-cover w-full h-48" />
+        </figure>
+        <div class="p-4 flex flex-col h-96">
+          <h2 class="card-title text-2xl font-bold" th:text="${hit.recipe.label}">Recipe Label</h2>
+          <div class="overflow-auto">
+            <h3 class="text-lg font-semibold">Ingredients</h3>
+            <ul class="mb-4">
+              <li th:each="ingredientLine : ${hit.recipe.ingredientLines}" th:text="${ingredientLine}">Ingredient Line</li>
+            </ul>
 
-            <!-- Other recipe details -->
+          <div class="mt-auto">
             <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
-            <button type="button" class="btn btn-primary save-recipe-btn" th:data-recipe-uri="${hit.recipe.url}">
-              Save Recipe
-            </button>
-            
+            <button type="button" class="btn btn-secondary" id="save-recipe-btn"
+            th:data-recipe-uri="${hit.recipe.url}"
+            th:data-recipe-title="${hit.recipe.label}"
+            th:data-recipe-image="${hit.recipe.image}">Save Recipe</button>
+          
           </div>
         </div>
       </div>
     </div>
-
+    
     <div th:if="${#lists.isEmpty(recipes)}">
       <p>No recipes found or search not yet performed.</p>
     </div>
   </div>
 
+
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>
-
+  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.save-recipe-btn').forEach(function (button) {
-        button.addEventListener('click', function () {
-          var recipeUri = this.getAttribute('data-recipe-uri'); // Ensure your button has this attribute
-          fetch('/save-recipe', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              // If you're using CSRF protection, you need to include the CSRF token here.
-            },
-            body: JSON.stringify({ recipeUri: recipeUri })
-          })
-          .then(response => {
-            if (response.ok) {
-              alert('Recipe saved successfully!');
-            } else {
-              response.text().then(text => { alert(text); });
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-          });
-        });
+      document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var recipeUri = this.getAttribute('data-recipe-uri'); // Get the recipe URI
+      var recipeTitle = this.getAttribute('data-recipe-title'); // Get the recipe title
+      var recipeImage = this.getAttribute('data-recipe-image'); // Get the recipe image URL
+
+      // Create an object with the data to be saved
+      var dataToSave = {
+        recipeUri: recipeUri,
+        recipeTitle: recipeTitle,
+        recipeImage: recipeImage
+      };
+
+      // Perform a fetch request to save the data
+      fetch('/save-recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // If you're using CSRF protection, you need to include the CSRF token here.
+        },
+        body: JSON.stringify(dataToSave) // Send the data as JSON
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Recipe saved successfully!');
+        } else {
+          response.text().then(text => { alert(text); });
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
       });
     });
+  });
+});
+
+
     </script>
-    
-  </body>
-  </html>
+</body>
+</html>

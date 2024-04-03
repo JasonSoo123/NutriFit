@@ -19,25 +19,29 @@
   </style>
 </head>
 <body>
-  <nav class="navbar">
-    <img src="/images/NFLogo.png" alt="NutriFit Logo">
-    <a href="/logout" class="btn logout-btn">Logout</a>
-  </nav>
+  <form action="/back" method="post" name="backForm">
+    <nav class="navbar">
+      <button type="submit" class="navbar-brand btn btn-link" id="logoButton">
+        <img src="/images/NFLogo.png" alt="NutriFit Logo">
+      </button>
+      <a href="/logout" class="btn logout-btn">Logout</a>
+    </nav>
+  </form>
 
   <header class="header text-center">
     <h1>Saved Meals</h1>
   </header>
 
- 
   <div class="container mt-5">
     <div th:if="${not #lists.isEmpty(savedRecipes)}" class="card-deck">
       <div th:each="recipe : ${savedRecipes}" class="col-md-4 mb-3 d-flex align-items-stretch">
         <div class="card">
-          <img th:src="${recipe.recipeUri}" class="card-img-top" alt="Meal Image">
+          <img th:src="${recipe.recipeImage}" class="card-img-top" alt="Meal Image">
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title" th:text="${recipe.recipeUri}">Recipe URI</h5>
-            <p class="card-text flex-grow-1">Recipe details are not available at this time.</p>
-            <a th:href="@{${recipe.recipeUri}}" class="btn btn-primary mt-auto">View Recipe</a>
+            <h5 class="card-title" th:text="${recipe.recipeName}">Recipe Title</h5>
+            <p class="card-text flex-grow-1">
+              <a th:href="@{${recipe.recipeUri}}">View Recipe</a>
+            </p>
           </div>
         </div>
       </div>
@@ -46,13 +50,6 @@
       <p class="text-center">No saved recipes found.</p>
     </div>
   </div>
-
-  <form action="/back" method="post" name="backForm">
-    <div class="row justify-content-center">
-        <button type="submit" class ="btn btn-primary">Back</button>
-      </div>
-  </form>
-  
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>

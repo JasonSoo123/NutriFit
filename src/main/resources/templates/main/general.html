@@ -8,12 +8,16 @@
   <title>General Posts</title>
 </head>
 <body>
-  <nav class="navbar">
-    <img src="/images/NFLogo.png" alt="NutriFit Logo">
-    <a href="/logout" class="btn logout-btn">Logout</a>
-  </nav>
+  <form action="/back" method="post" name="backForm">
+    <nav class="navbar">
+      <button type="submit" class="navbar-brand btn btn-link" id="logoButton">
+        <img src="/images/NFLogo.png" alt="NutriFit Logo">
+      </button>
+      <a href="/logout" class="btn logout-btn">Logout</a>
+    </nav>
+  </form>
 
-  <header class="header">
+  <header class="header text-center">
     <h1>Community Connect</h1>
   </header>
 
@@ -53,22 +57,39 @@
 
     <div class="row mt-4">
       <div class="col-md-12">
-        <h3>Latest General Posts</h3>
+        <h3>Latest Posts</h3>
         <div class="card" th:each="Post:${post}">
-            <div class="card-body">
-              <h5 class="card-title" th:text="${Post.title}"></h5>
-              <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
-              <p th:text="${Post.content}"></p>
+          <div class="card-body">
+            <h5 class="card-title" th:text="${Post.title}"></h5>
+            <p class="card-text"><strong>Username:</strong> [[${Post.username}]]</p>
+            <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
+            <p th:text="${Post.content}"></p>
+
+            
+            <div th:if="${Post.username == user.username}" class="d-flex align-items-center">
+
+              <form action="/edit" method="post" name="editForm">
+
+                <input type="hidden" name="postUid" th:value="${Post.uid}">
+                <button type="submit" class="btn btn-primary mr-2">Edit</button>
+
+              </form>       
+              <form action="/deletePost" method="post" name="deletePostForm">
+
+                <input type="hidden" name="postUid" th:value="${Post.uid}">
+                <button  type="submit" class="btn btn-danger">Delete</button>
+              </form>
+
             </div>
+            <div th:if="${Post.username != user.username}">
+              <a href="/" class="btn btn-info">Reply</a>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>    
   </div>
-  <form action="/back" method="post" name="backForm">
-    <div class="row justify-content-center">
-        <button type="submit" class ="btn btn-primary">Back</button>
-      </div>
-  </form>
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>
