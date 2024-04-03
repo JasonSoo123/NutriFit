@@ -4,70 +4,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/main.css">
   <title>NutriFit</title>
 </head>
 <body>
-  <nav class="navbar">
-    <img src="/images/NFLogo.png" alt="NutriFit Logo">
-    <a href="/logout" class="btn logout-btn">Logout</a>
-  </nav>
-
-  <!-- Enhanced header with larger title and better spacing -->
-  <header class="header text-center" style="padding: 2rem 0; background-color: #f8f9fa;">
-    <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem;">Welcome to NutriFit</h1>
-    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Your path to a healthy lifestyle.</p>
-    <p class="welcome fade-in" th:text="'Welcome back, ' + ${user.name} + '!'"></p>
+  <header class="main-header">
+    <div class="top-bar">
+      <img src="/images/NFLogo.png" alt="NutriFit Logo" class="center-logo">
+      <a href="/logout" class="btn logout-btn">Logout</a>
+    </div>
+    <div class="welcome-box">
+      <h1>Welcome to NutriFit</h1>
+      <p>Your path to a healthy lifestyle.</p>
+      <p class="welcome fade-in" th:text="'Enjoy your stay, ' + ${user.name} + '!'"></p>
+    </div>
   </header>
 
-  <div class="container px-4 mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <!-- Recipe Finder Card -->
-      <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
-        <div class="card-body text-center">
-          <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Recipe Finder</h2>
-          <p style="margin-bottom: 1.5rem;">Expert recipe finder tailored to support your fitness goals and dietary preferences.</p>
-          <div class="card-actions justify-center">
-            <a href="/meals" class="btn btn-primary">Explore</a>
-          </div>
+  <div class="card-container">
+    <!-- Recipe Finder Card -->
+    <div class="card">
+      <div class="face face1">
+        <div class="content">
+          <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/design_128.png?raw=true">
+          <h3>Recipe Finder</h3>
         </div>
       </div>
+      <div class="face face2">
+        <div class="content">
+          <p>Expert recipe finder tailored to support your fitness goals and dietary preferences.</p>
+          <a href="/meals">Explore</a>
+        </div>
+      </div>
+    </div>
 
-    <!-- My Meals Card -->
-    <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
-      <div class="card-body text-center">
-        <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">My Meals</h2>
-        <p style="margin-bottom: 1.5rem;">Access your personal library of meals you saved to cook up.</p>
-        <div class="card-actions justify-center">
-          <a href="/saved" class="btn btn-primary">View Meals</a>
+    <!-- Saved Meals Card -->
+    <div class="card">
+      <div class="face face1">
+        <div class="content">
+          <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/code_128.png?raw=true">
+          <h3>My Meals</h3>
+        </div>
+      </div>
+      <div class="face face2">
+        <div class="content">
+          <p>Access your personal library of meals you saved to cook up.</p>
+          <a href="/saved">View Meals</a>
         </div>
       </div>
     </div>
 
     <!-- Community Connect Card -->
-    <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
-      <div class="card-body text-center">
-        <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Community Connect</h2>
-        <p style="margin-bottom: 1.5rem;">Connect with peers and experts to share experiences and plans.</p>
-        <div class="card-actions justify-center">
-          <a href="/support" class="btn btn-primary">Connect</a>
+    <div class="card">
+      <div class="face face1">
+        <div class="content">
+          <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/launch_128.png?raw=true">
+          <h3>Community Connect</h3>
+        </div>
+      </div>
+      <div class="face face2">
+        <div class="content">
+          <p>Connect with peers and experts to share experiences and plans.</p>
+          <a href="/support">Connect</a>
         </div>
       </div>
     </div>
 
     <!-- Shopping Simplified Card -->
-    <div class="card card-bordered bg-base-100 shadow-xl image-full" style="display: flex; flex-direction: column; justify-content: space-between;">
-      <div class="card-body text-center">
-        <h2 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Shopping Simplified</h2>
-        <p style="margin-bottom: 1.5rem;">Find all the grocery stores near you so you can get the ingredients you need.</p>
-        <div class="card-actions justify-center">
-          <a href="/shopping" class="btn btn-primary">Shop Now</a>
+    <div class="card">
+      <div class="face face1">
+        <div class="content">
+          <img src="https://github.com/Jhonierpc/WebDevelopment/blob/master/CSS%20Card%20Hover%20Effects/img/design_128.png?raw=true"> <!-- Changed the image to match the context -->
+          <h3>Shopping Simplified</h3>
+        </div>
+      </div>
+      <div class="face face2">
+        <div class="content">
+          <p>Find all the grocery stores near you so you can get the ingredients you need.</p>
+          <a href="/shopping">Shop Now</a>
         </div>
       </div>
     </div>
   </div>
-</div>
   
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
