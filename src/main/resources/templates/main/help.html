@@ -58,39 +58,58 @@
 
     <div class="row mt-4">
       <div class="col-md-12">
-        <h3>Latest Posts</h3>
+        <h3>Latest Help Posts</h3>
         <div class="card" th:each="Post:${post}">
           <div class="card-body">
             <h5 class="card-title" th:text="${Post.title}"></h5>
             <p class="card-text"><strong>Username:</strong> [[${Post.username}]]</p>
             <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
             <p th:text="${Post.content}"></p>
-
             
+            <!-- Display replies in individual boxes under the post -->
+            <div class="mt-4">
+              <h5>Replies</h5>
+              <div th:each="Reply:${reply}">
+                <div th:if="${Reply.postUsername == Post.username and Reply.postTitle == Post.title}" class="border rounded p-3 mb-3">
+                  <p th:text="${Reply.content}"></p>
+                  <p>By: <span th:text="${Reply.username}"></span></p>
+                </div>
+              </div>
+            </div>
+
             <div th:if="${Post.username == user.username}" class="d-flex align-items-center">
-
               <form action="/edit" method="post" name="editForm">
-
                 <input type="hidden" name="postUid" th:value="${Post.uid}">
                 <button type="submit" class="btn btn-primary mr-2">Edit</button>
-
               </form>       
               <form action="/deletePost" method="post" name="deletePostForm">
-
                 <input type="hidden" name="postUid" th:value="${Post.uid}">
                 <button  type="submit" class="btn btn-danger">Delete</button>
               </form>
             </div>
+            
             <div th:if="${Post.username != user.username}">
-              <a href="/" class="btn btn-info">Reply</a>
+              <button type="button" class="btn btn-info reply-button" th:attr="data-target='#replyForm-' + ${Post.uid}">
+                Reply
+              </button>
+              <div th:id="'replyForm-' + ${Post.uid}" class="collapse mt-3">
+                <h4>Reply to this post</h4>
+                  <form action="/replyInHelp" method="post" name="replyForm">
+                    <input type="hidden" name="postTitle" th:value="${Post.title}">
+                    <input type="hidden" name="postUsername" th:value="${Post.username}">
+                    <div class="form-group">
+                        <label for="replyContent">Your Reply</label>
+                        <textarea class="form-control" id="replyContent" name="replyContent" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Reply</button>
+                  </form>
+                </div>
+              </div>
             </div>
-
           </div>
-        </div>
-      </div>
-    </div>    
-  </div>
-
+        </div>    
+      </div>   
+    </div>
   <footer class="footer">
     <span>Stay connected with NutriFit.</span>
   </footer>
@@ -98,5 +117,30 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Add event listener to all reply buttons
+    document.querySelectorAll('.reply-button').forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Toggle the collapse of the corresponding reply form
+        var targetId = this.getAttribute('data-target');
+        var targetElement = document.querySelector(targetId);
+  
+        // Check if the target element is collapsed or not
+        var isCollapsed = targetElement.classList.contains('show');
+  
+        // If the target element is not collapsed, hide all other reply forms first
+        if (!isCollapsed) {
+          document.querySelectorAll('.collapse').forEach(function(element) {
+            if (element !== targetElement) {
+              element.classList.remove('show');
+            }
+          });
+        }
+  
+        // Toggle the collapse of the target element
+        targetElement.classList.toggle('show');
+      });
+    });
+  </script>
 </body>
 </html>

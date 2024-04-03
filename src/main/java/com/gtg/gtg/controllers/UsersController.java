@@ -36,6 +36,8 @@ import com.gtg.gtg.models.SavedRecipe;
 import com.gtg.gtg.models.SavedRecipesRepository;
 import com.gtg.gtg.models.Users;
 import com.gtg.gtg.models.UsersRepository;
+import com.gtg.gtg.models.Reply;
+import com.gtg.gtg.models.ReplyRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,13 +50,70 @@ import org.slf4j.LoggerFactory;
 public class UsersController {
 
     @Autowired
-   private UsersRepository UsersRepo;
+    private UsersRepository UsersRepo;
 
     @Autowired
-   private SavedRecipesRepository savedRecipesRepo;
+    private SavedRecipesRepository savedRecipesRepo;
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
+
+    @PostMapping("/reply")
+    public String reply(@RequestParam("postTitle") String postTitle,
+                        @RequestParam("postUsername") String postUsername,
+                        @RequestParam("replyContent") String content, 
+                        HttpServletRequest request) {
+        Reply reply = new Reply();
+        reply.setPostTitle(postTitle);
+        reply.setPostUsername(postUsername);
+        reply.setContent(content);
+
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        reply.setUsername(sessionUser.getUsername());
+
+        replyRepository.save(reply);
+
+        return "redirect:/support";
+    }
+
+    @PostMapping("/replyInGeneral")
+    public String replyInGeneral(@RequestParam("postTitle") String postTitle,
+                        @RequestParam("postUsername") String postUsername,
+                        @RequestParam("replyContent") String content, 
+                        HttpServletRequest request) {
+        Reply reply = new Reply();
+        reply.setPostTitle(postTitle);
+        reply.setPostUsername(postUsername);
+        reply.setContent(content);
+
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        reply.setUsername(sessionUser.getUsername());
+
+        replyRepository.save(reply);
+
+        return "redirect:/general";
+    }
+
+    @PostMapping("/replyInHelp")
+    public String replyInHelp(@RequestParam("postTitle") String postTitle,
+                        @RequestParam("postUsername") String postUsername,
+                        @RequestParam("replyContent") String content, 
+                        HttpServletRequest request) {
+        Reply reply = new Reply();
+        reply.setPostTitle(postTitle);
+        reply.setPostUsername(postUsername);
+        reply.setContent(content);
+
+        Users sessionUser  = (Users) request.getSession().getAttribute("session_user");
+        reply.setUsername(sessionUser.getUsername());
+
+        replyRepository.save(reply);
+
+        return "redirect:/help";
+    }
 
     @PostMapping("/deletePost")
     public String deletePost(@RequestParam("postUid") int postUid) {
@@ -62,6 +121,10 @@ public class UsersController {
         List<Post> postToDelete = postRepository.findByUid(postUid);
         if (!postToDelete.isEmpty()) {
             Post toDelete = postToDelete.get(0);
+
+            List<Reply> repliesToDelete = replyRepository.findByPostTitleAndPostUsername(toDelete.getTitle(), toDelete.getUsername());
+            replyRepository.deleteAll(repliesToDelete);
+
             postRepository.delete(toDelete);
     
         } 
@@ -75,6 +138,10 @@ public class UsersController {
         List<Post> postToDelete = postRepository.findByUid(postUid);
         if (!postToDelete.isEmpty()) {
             Post toDelete = postToDelete.get(0);
+
+            List<Reply> repliesToDelete = replyRepository.findByPostTitleAndPostUsername(toDelete.getTitle(), toDelete.getUsername());
+            replyRepository.deleteAll(repliesToDelete);
+            
             postRepository.delete(toDelete);
     
         } 
@@ -88,6 +155,10 @@ public class UsersController {
         List<Post> postToDelete = postRepository.findByUid(postUid);
         if (!postToDelete.isEmpty()) {
             Post toDelete = postToDelete.get(0);
+
+            List<Reply> repliesToDelete = replyRepository.findByPostTitleAndPostUsername(toDelete.getTitle(), toDelete.getUsername());
+            replyRepository.deleteAll(repliesToDelete);
+
             postRepository.delete(toDelete);
     
         } 
@@ -103,6 +174,9 @@ public class UsersController {
         List<Post> allPosts = postRepository.findAll();
         Collections.reverse(allPosts); // make it the latest first
         model.addAttribute("post", allPosts);
+
+        List<Reply> allReplies = replyRepository.findAll();
+        model.addAttribute("reply", allReplies);
         return "main/support"; 
     }
 
@@ -114,6 +188,9 @@ public class UsersController {
         List<Post> allGeneralPosts = postRepository.findByCategoryType("General");
         Collections.reverse(allGeneralPosts);
         model.addAttribute("post", allGeneralPosts);
+
+        List<Reply> allReplies = replyRepository.findAll();
+        model.addAttribute("reply", allReplies);
         return "main/general";
     }
 
@@ -125,6 +202,9 @@ public class UsersController {
         List<Post> allHelpPosts = postRepository.findByCategoryType("Help");
         Collections.reverse(allHelpPosts);
         model.addAttribute("post", allHelpPosts);
+
+        List<Reply> allReplies = replyRepository.findAll();
+        model.addAttribute("reply", allReplies);
         return "main/help";
     }
 

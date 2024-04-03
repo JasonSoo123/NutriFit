@@ -67,6 +67,17 @@
             <p class="card-text"><strong>Username:</strong> [[${Post.username}]]</p>
             <p class="card-text"><strong>Category:</strong> [[${Post.categoryType}]]</p>
             <p th:text="${Post.content}"></p>
+            
+            <!-- Display replies in individual boxes under the post -->
+            <div class="mt-4">
+              <h5>Replies</h5>
+              <div th:each="Reply:${reply}">
+                <div th:if="${Reply.postUsername == Post.username and Reply.postTitle == Post.title}" class="border rounded p-3 mb-3">
+                  <p th:text="${Reply.content}"></p>
+                  <p>By: <span th:text="${Reply.username}"></span></p>
+                </div>
+              </div>
+            </div>
 
             <div th:if="${Post.username == user.username}" class="d-flex align-items-center">
               <form action="/edit" method="post" name="editForm">
@@ -86,7 +97,8 @@
               <div th:id="'replyForm-' + ${Post.uid}" class="collapse mt-3">
                 <h4>Reply to this post</h4>
                   <form action="/reply" method="post" name="replyForm">
-                    <input type="hidden" name="postUid" th:value="${Post.uid}">
+                    <input type="hidden" name="postTitle" th:value="${Post.title}">
+                    <input type="hidden" name="postUsername" th:value="${Post.username}">
                     <div class="form-group">
                         <label for="replyContent">Your Reply</label>
                         <textarea class="form-control" id="replyContent" name="replyContent" rows="3" required></textarea>
@@ -109,11 +121,26 @@
   <script>
     // Add event listener to all reply buttons
     document.querySelectorAll('.reply-button').forEach(function(button) {
-        button.addEventListener('click', function() {
-            // Toggle the collapse of the corresponding reply form
-            var targetId = this.getAttribute('data-target');
-            document.querySelector(targetId).classList.toggle('show');
-        });
+      button.addEventListener('click', function() {
+        // Toggle the collapse of the corresponding reply form
+        var targetId = this.getAttribute('data-target');
+        var targetElement = document.querySelector(targetId);
+  
+        // Check if the target element is collapsed or not
+        var isCollapsed = targetElement.classList.contains('show');
+  
+        // If the target element is not collapsed, hide all other reply forms first
+        if (!isCollapsed) {
+          document.querySelectorAll('.collapse').forEach(function(element) {
+            if (element !== targetElement) {
+              element.classList.remove('show');
+            }
+          });
+        }
+  
+        // Toggle the collapse of the target element
+        targetElement.classList.toggle('show');
+      });
     });
   </script>
 </body>
