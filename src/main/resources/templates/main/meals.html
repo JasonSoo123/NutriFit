@@ -78,7 +78,7 @@
 
           <div class="mt-auto">
             <a th:href="${hit.recipe.url}" target="_blank" class="btn btn-primary">View Full Recipe</a>
-            <button type="button" class="btn btn-secondary" th:data-recipe-uri="${hit.recipe.url}">Save Recipe</button>
+            <button type="button" class="btn btn-secondary" id="save-recipe-btn" th:data-recipe-url="${hit.recipe.url}">Save Recipe</button>
           </div>
         </div>
       </div>
@@ -98,10 +98,13 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.save-recipe-btn').forEach(function (button) {
+      document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
         button.addEventListener('click', function () {
-          var recipeUri = this.getAttribute('data-recipe-uri'); // Ensure your button has this attribute
+          // Add an alert to indicate the button is pressed
+          //alert('Save button pressed!');
+          
+          var recipeUri = this.getAttribute('data-recipe-url'); // Ensure your button has this attribute
           fetch('/save-recipe', {
             method: 'POST',
             headers: {
@@ -124,6 +127,7 @@
         });
       });
     });
+
     </script>
 </body>
 </html>
