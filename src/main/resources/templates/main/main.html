@@ -17,8 +17,12 @@
       <a href="/logout" class="btn logout-btn">Logout</a>
     </div>
     <div class="welcome-box">
-      <div class="welcome-image-container">
-        <img src="/images/welcomebanner2.png" alt="Welcome Banner" class="center-welcome-image">
+      <div class="wrapper">
+        <svg>
+          <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+            WELCOME TO NUTRIFIT
+          </text>
+        </svg>
       </div>
       <p class="welcome fade-in" th:text="'Enjoy your stay, ' + ${user.name} + '!'"></p>
     </div>
