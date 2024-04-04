@@ -456,11 +456,15 @@ public class UsersController {
                                @RequestParam(required = false) List<String> diet,
                                @RequestParam(required = false) List<String> health,
                                Model model) {
+
+        
+                                
+        String trimmedIngredient = ingredient.replaceAll("\\s+", ""); 
         
         // Create a URL with query parameters
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.edamam.com/api/recipes/v2")
                 .queryParam("type", "public")
-                .queryParam("q", ingredient)
+                .queryParam("q", trimmedIngredient)
                 .queryParam("app_id", apiId)
                 .queryParam("app_key", apiKey);
     
