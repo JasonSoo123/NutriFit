@@ -4,13 +4,94 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  /** Montserrat-Alt1 Thin **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 100;
+  font-style: normal;
+  src: url("Montserrat-Alt1-Thin.woff2") format("woff2"),
+       url("Montserrat-Alt1-Thin.woff") format("woff");
+}
+
+/** Montserrat-Alt1 ExtraLight **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 200;
+  font-style: normal;
+  src: url("Montserrat-Alt1-ExtraLight.woff2") format("woff2"),
+       url("Montserrat-Alt1-ExtraLight.woff") format("woff");
+}
+
+/** Montserrat-Alt1 Light **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 300;
+  font-style: normal;
+  src: url("Montserrat-Alt1-Light.woff2") format("woff2"),
+       url("Montserrat-Alt1-Light.woff") format("woff");
+}
+
+/** Montserrat-Alt1 Regular **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 400;
+  font-style: normal;
+  src: url("Montserrat-Alt1-Regular.woff2") format("woff2"),
+       url("Montserrat-Alt1-Regular.woff") format("woff");
+}
+
+/** Montserrat-Alt1 Medium **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 500;
+  font-style: normal;
+  src: url("Montserrat-Alt1-Medium.woff2") format("woff2"),
+       url("Montserrat-Alt1-Medium.woff") format("woff");
+}
+
+/** Montserrat-Alt1 SemiBold **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 600;
+  font-style: normal;
+  src: url("Montserrat-Alt1-SemiBold.woff2") format("woff2"),
+       url("Montserrat-Alt1-SemiBold.woff") format("woff");
+}
+
+/** Montserrat-Alt1 Bold **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 700;
+  font-style: normal;
+  src: url("Montserrat-Alt1-Bold.woff2") format("woff2"),
+       url("Montserrat-Alt1-Bold.woff") format("woff");
+}
+
+/** Montserrat-Alt1 ExtraBold **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 800;
+  font-style: normal;
+  src: url("Montserrat-Alt1-ExtraBold.woff2") format("woff2"),
+       url("Montserrat-Alt1-ExtraBold.woff") format("woff");
+}
+
+/** Montserrat-Alt1 Black **/
+@font-face {
+  font-family: "Montserrat-Alt1";
+  font-weight: 900;
+  font-style: normal;
+  src: url("Montserrat-Alt1-Black.woff2") format("woff2"),
+       url("Montserrat-Alt1-Black.woff") format("woff");
+}
   
   /* Global styles */
   body {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
     min-height: 100vh;
-    font-family: 'Consolas', monospace;
+    font-family: "Montserrat-Alt1", sans-serif; /* Changed to Montserrat-Alt1 */
     background-color: #deebe1; /* Changed to match the header background color */
     line-height: 1.6;
     color: #333;
@@ -52,12 +133,24 @@
     justify-content: center; /* This will center the logo */
     flex-grow: 1; /* This will allow the logo container to take up all available space */
   }
+
   
+  /* Logout button styling */
   .logout-btn {
-    position: absolute;
+    position: fixed; /* Change to fixed to keep it at the top right regardless of scrolling */
     top: 20px;
     right: 20px;
+    border: 1px solid #7ab098;
+    background-color: transparent;
+    color: #7ab098;
+    transition: all 0.3s ease;
   }
+
+  .logout-btn:hover {
+    background-color: #66907c;
+    color: #fff;
+  }
+
   
   .logo-container {
     text-align: center;
@@ -70,6 +163,19 @@
   .welcome-box {
     margin-top: 20px; /* Space between logo and welcome text */
     text-align: center;
+  }
+
+  .welcome-image-container {
+    display: flex; /* Use flex to center the child image */
+    justify-content: center; /* Center the child horizontally */
+    width: 100%; /* Ensure the container spans the full width */
+  }
+  
+  .center-welcome-image {
+    max-width: 100%; /* Limit image size to its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Display as block-level for margin: auto to work */
+    margin: auto; /* Auto margin on all sides will center the image */
   }
   
   
@@ -90,7 +196,7 @@
     width: calc(25% - 40px); /* Four cards per row */
     margin-bottom: 20px;
     height: 400px; /* Adjusted to fit the hover effect */
-    background-color: #89a198; /* Card background color */
+    background-color: #4B4141; /* Card background color */
     margin: 0 20px 20px; /* Spacing between cards */
     transition: 0.5s;
     display: flex;
@@ -108,7 +214,7 @@
   }
   
   .face.face1 {
-    background: #89a198;
+    background: #4B4141;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +224,7 @@
   }
   
   .card:hover .face.face1 {
-    background: #c48e94; /* Background color on hover */
+    background: #7ab098; /* Background color on hover */
     transform: translateY(0);
   }
   
@@ -161,7 +267,7 @@
     font-weight: 900;
     color: #89a198;
     padding: 5px;
-    border: 1px solid #3d4240;
+    border: 1px solid #4B4141;
   }
   
   .face.face2 .content a:hover {
