@@ -9,72 +9,61 @@
 </head>
 <body>
     <nav class="navbar">
-        <img src="/images/NFLogo.png" alt="NutriFit Logo">
+        <img src="/images/NFLogo.png" alt="NutriFit Logo" class="mb-4">
     </nav>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h1 class="text-center mt-5 mb-4">Lets get you started!</h1>
-                <form id="signup-form" action="/add" method="post">
-                    <!-- Step 1: Username -->
-                    <div id="step-1">
-                        <div class="form-group">
+                <div class="card mt-5 mb-4 p-4">
+                    <h1 class="text-center mb-4">Let's get you started!</h1>
+                    <form id="signup-form" action="/add" method="post">
+                        <!-- Step 1: Username -->
+                        <div id="step-1" class="form-label-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+                            <button type="button" class="btn btn-lg btn-primary btn-block next-btn mt-3" disabled>Next</button>
                         </div>
-                        <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
-                    </div>
-                    <!-- Step 2: Name -->
-                    <div id="step-2" style="display: none;">
-                        <div class="form-group">
+                        <!-- Step 2: Name -->
+                        <div id="step-2" class="form-label-group" style="display: none;">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                            <button type="button" class="btn btn-lg btn-primary btn-block prev-btn mt-3">Previous</button>
+                            <button type="button" class="btn btn-lg btn-primary btn-block next-btn mt-3" disabled>Next</button>
                         </div>
-                        <button type="button" class="btn btn-primary prev-btn">Previous</button>
-                        <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
-                    </div>
-                    <!-- Step 3: Email -->
-                    <div id="step-3" style="display: none;">
-                        <div class="form-group">
+                        <!-- Step 3: Email -->
+                        <div id="step-3" class="form-label-group" style="display: none;">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                            <button type="button" class="btn btn-lg btn-primary btn-block prev-btn mt-3">Previous</button>
+                            <button type="button" class="btn btn-lg btn-primary btn-block next-btn mt-3" disabled>Next</button>
                         </div>
-                        <button type="button" class="btn btn-primary prev-btn">Previous</button>
-                        <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
-                    </div>
-                    <!-- Step 4: Password -->
-                    <div id="step-4" style="display: none;">
-                        <div class="form-group">
+                        <!-- Step 4: Password -->
+                        <div id="step-4" class="form-label-group" style="display: none;">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                             <small id="passwordHelp" class="form-text text-muted">Password must contain at least one uppercase letter, one number, one symbol, and be at least 8 characters long.</small>
-                        </div>
-                        <div class="form-group">
                             <label for="confirmPassword">Confirm Password</label>
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="btn btn-lg btn-primary btn-block prev-btn mt-3">Previous</button>
+                            <button type="button" class="btn btn-lg btn-primary btn-block next-btn mt-3" disabled>Next</button>
                         </div>
-                        <button type="button" class="btn btn-primary prev-btn">Previous</button>
-                        <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
-                    </div>
-                    <!-- Step 5: Birthday -->
-                    <div id="step-5" style="display: none;">
-                        <div class="form-group">
+                        <!-- Step 5: Birthday -->
+                        <div id="step-5" class="form-label-group" style="display: none;">
                             <label for="birthday">Birthday</label>
                             <input type="date" class="form-control" id="birthday" name="birthday" required>
+                            <button type="button" class="btn btn-lg btn-primary btn-block prev-btn mt-3">Previous</button>
+                            <button type="submit" id="signup-btn" class="btn btn-lg btn-primary btn-block mt-3" disabled>Sign Up</button>
                         </div>
-                        <button type="button" class="btn btn-primary prev-btn">Previous</button>
-                        <button type="submit" id="signup-btn" class="btn btn-primary" disabled>Sign Up</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p style="display: inline;">Have an account? <a href="/">Login</a></p>
                     </div>
-                </form>
-                <div class="text-center mt-3">
-                    <p style="display: inline;">Have an account? <a href="/">Login</a></p>
                 </div>
             </div>
         </div>
     </div>
-
     <footer class="footer mt-8 mb-4 text-center">
-        <span>Stay Connected with Nutrifit</span>
+        <span>©2024 NutriFit. All rights reserved.</span>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

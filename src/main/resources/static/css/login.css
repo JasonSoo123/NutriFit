@@ -1,33 +1,11 @@
-/* Colaborate Font Faces */
-@font-face {
-    font-family: 'Colaborate';
-    src: url('/fonts/ColabBol.woff') format('woff');
-    font-weight: bold;
-  }
-  
-  @font-face {
-    font-family: 'Colaborate';
-    src: url('/fonts/ColabLig.woff') format('woff');
-    font-weight: 300; /* Light */
-  }
+
   
   @font-face {
     font-family: 'Colaborate';
     src: url('/fonts/ColabMed.woff') format('woff');
     font-weight: 500; /* Medium */
   }
-  
-  @font-face {
-    font-family: 'Colaborate';
-    src: url('/fonts/ColabReg.woff') format('woff');
-    font-weight: normal; /* Regular */
-  }
-  
-  @font-face {
-    font-family: 'Colaborate';
-    src: url('/fonts/ColabThi.woff') format('woff');
-    font-weight: 100; /* Thin */
-  }
+
   
   /* Basic reset for styling consistency */
   * {
