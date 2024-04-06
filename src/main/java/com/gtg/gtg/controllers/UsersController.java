@@ -48,6 +48,8 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 public class UsersController {
+    private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
+
 
     @Autowired
     private UsersRepository UsersRepo;
@@ -453,13 +455,12 @@ public class UsersController {
 
     @PostMapping("/search-recipe")
     public String searchRecipe(@RequestParam String ingredient,
-                               @RequestParam(required = false) List<String> diet,
                                @RequestParam(required = false) List<String> health,
                                Model model) {
-
-        
-                                
-        String trimmedIngredient = ingredient.replaceAll("\\s+", ""); 
+    
+        logger.info("Health list: {}", health); // Updated logging to reflect the health list
+    
+        String trimmedIngredient = ingredient.trim().replaceAll("\\s+", ",");
         
         // Create a URL with query parameters
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.edamam.com/api/recipes/v2")
@@ -467,26 +468,22 @@ public class UsersController {
                 .queryParam("q", trimmedIngredient)
                 .queryParam("app_id", apiId)
                 .queryParam("app_key", apiKey);
-    
-        if (diet != null) {
-            for (String dietType : diet) {
-                // The API expects diet preferences to be in a certain format
-                builder.queryParam("diet", dietType.toLowerCase());
-            }
+        
+        // Updated to check for the health parameter instead of diet
+        if (health != null && !health.isEmpty()) {
+            builder.queryParam("health", String.join(",", health));
         }
-    
-        if (health != null) {
-            for (String healthLabel : health) {
-                // The API expects health labels to be in a certain format
-                builder.queryParam("health", healthLabel.toLowerCase());
-            }
-        }
-    
+        
         String urlTemplate = builder.build().encode().toUriString();
+        
+        logger.info("URL for API request: {}", urlTemplate); // Log the final request URL
     
         RestTemplate restTemplate = new RestTemplate();
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(urlTemplate, String.class);
+            
+            logger.info("Response from API: {}", response.getBody()); // Log the API response
+    
             if (response.getStatusCode() == HttpStatus.OK) {
                 ObjectMapper mapper = new ObjectMapper();
                 RecipeResult recipeResult = mapper.readValue(response.getBody(), RecipeResult.class);
@@ -495,13 +492,16 @@ public class UsersController {
                 model.addAttribute("error", "Failed to fetch recipes: " + response.getStatusCode());
             }
         } catch (HttpClientErrorException e) {
+            logger.error("API request error: ", e);
             model.addAttribute("error", "API request error: " + e.getMessage());
         } catch (IOException e) {
+            logger.error("Error parsing recipe data: ", e);
             model.addAttribute("error", "Error parsing recipe data");
         }
     
         return "main/meals";
     }
+    
 
 
     @PostMapping("/save-recipe")

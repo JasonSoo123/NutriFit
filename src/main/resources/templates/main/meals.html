@@ -21,7 +21,7 @@
   </form>
 
   <header class="header text-center">
-    <h1><img src="/images/RECIPE.png" alt="Find A Recipe" class="center-welcome-image"></h1>
+    <h1>Find a Recipe</h1>
   </header>
 
   <div class="container">
@@ -47,8 +47,10 @@
       <div class="form-group">
         <label>Diet:</label>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="vegetarian" name="diet" value="vegetarian">
-          <label class="form-check-label" for="vegetarian">Vegetarian</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="vegetarian" name="health" value="vegetarian">
+            <label class="form-check-label" for="vegetarian">Vegetarian</label>
+        </div>
         </div>
       </div>
       <!-- Allergies checkboxes -->
@@ -92,7 +94,6 @@
       <p>No recipes found or search not yet performed.</p>
     </div>
   </div>
-  </div>
 
 
   <footer class="footer">
@@ -103,45 +104,41 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-      document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
-    button.addEventListener('click', function () {
-      var recipeUri = this.getAttribute('data-recipe-uri'); // Get the recipe URI
-      var recipeTitle = this.getAttribute('data-recipe-title'); // Get the recipe title
-      var recipeImage = this.getAttribute('data-recipe-image'); // Get the recipe image URL
-
-      // Create an object with the data to be saved
-      var dataToSave = {
-        recipeUri: recipeUri,
-        recipeTitle: recipeTitle,
-        recipeImage: recipeImage
-      };
-
-      // Perform a fetch request to save the data
-      fetch('/save-recipe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // If you're using CSRF protection, you need to include the CSRF token here.
-        },
-        body: JSON.stringify(dataToSave) // Send the data as JSON
-      })
-      .then(response => {
-        if (response.ok) {
-          alert('Recipe saved successfully!');
-        } else {
-          response.text().then(text => { alert(text); });
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var recipeUri = this.getAttribute('data-recipe-uri');
+          var recipeTitle = this.getAttribute('data-recipe-title');
+          var recipeImage = this.getAttribute('data-recipe-image');
+    
+          var dataToSave = {
+            recipeUri: recipeUri,
+            recipeTitle: recipeTitle,
+            recipeImage: recipeImage
+          };
+    
+          console.log('Saving recipe:', dataToSave); // Debugging: Log the data to save
+    
+          fetch('/save-recipe', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // Add CSRF token if needed
+            },
+            body: JSON.stringify(dataToSave)
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Save recipe response:', data); // Debugging: Log the response data
+            alert('Recipe saved successfully!');
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          });
+        });
       });
     });
-  });
-});
-
-
     </script>
 </body>
 </html>
