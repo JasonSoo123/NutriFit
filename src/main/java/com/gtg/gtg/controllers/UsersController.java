@@ -29,7 +29,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gtg.gtg.RecipeResult; // Ensure RecipeResult is in the com.gtg.gtg package
+import com.gtg.gtg.RecipeResult;
 import com.gtg.gtg.models.Post;
 import com.gtg.gtg.models.PostRepository;
 import com.gtg.gtg.models.SavedRecipe;

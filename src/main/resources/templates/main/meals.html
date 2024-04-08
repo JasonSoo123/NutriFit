@@ -43,24 +43,47 @@
         <label for="ingredient">Ingredients (comma separated):</label>
         <input type="text" class="form-control" id="ingredient" name="ingredient" placeholder="e.g. chicken,lettuce,tomato" required>
       </div>
-      <!-- Diet checkboxes -->
-      <div class="form-group">
-        <label>Diet:</label>
-        <div class="form-check">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="vegetarian" name="health" value="vegetarian">
-            <label class="form-check-label" for="vegetarian">Vegetarian</label>
-        </div>
-        </div>
+    <!-- Diet checkboxes -->
+    <div class="form-group">
+      <label>Diet:</label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="vegetarian" name="health" value="vegetarian">
+        <label class="form-check-label" for="vegetarian">Vegetarian</label>
       </div>
-      <!-- Allergies checkboxes -->
-      <div class="form-group">
-        <label>Allergies:</label>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gluten" name="health" value="gluten-free">
-          <label class="form-check-label" for="gluten">Gluten</label>
-        </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="low-carb" name="diet" value="low-carb">
+        <label class="form-check-label" for="low-carb">Low-Carb</label>
       </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="low-fat" name="diet" value="low-fat">
+        <label class="form-check-label" for="low-fat">Low-Fat</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="low-sodium" name="diet" value="low-sodium">
+        <label class="form-check-label" for="low-sodium">Low-Sodium</label>
+      </div>
+    </div>
+
+    <!-- Allergies checkboxes -->
+    <div class="form-group">
+      <label>Allergies:</label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gluten" name="health" value="gluten-free">
+        <label class="form-check-label" for="gluten">Gluten</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="peanut-free" name="health" value="peanut-free">
+        <label class="form-check-label" for="peanut-free">Peanut-Free</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="soy-free" name="health" value="soy-free">
+        <label class="form-check-label" for="soy-free">Soy-Free</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="fish-free" name="health" value="fish-free">
+        <label class="form-check-label" for="fish-free">Fish-Free</label>
+      </div>
+    </div>
       <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
