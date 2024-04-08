@@ -127,41 +127,47 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
-        button.addEventListener('click', function () {
-          var recipeUri = this.getAttribute('data-recipe-uri');
-          var recipeTitle = this.getAttribute('data-recipe-title');
-          var recipeImage = this.getAttribute('data-recipe-image');
-    
-          var dataToSave = {
-            recipeUri: recipeUri,
-            recipeTitle: recipeTitle,
-            recipeImage: recipeImage
-          };
-    
-          console.log('Saving recipe:', dataToSave); // Debugging: Log the data to save
-    
-          fetch('/save-recipe', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              // Add CSRF token if needed
-            },
-            body: JSON.stringify(dataToSave)
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Save recipe response:', data); // Debugging: Log the response data
-            alert('Recipe saved successfully!');
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-          });
-        });
+   document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('#save-recipe-btn').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var recipeUri = this.getAttribute('data-recipe-uri');
+      var recipeTitle = this.getAttribute('data-recipe-title');
+      var recipeImage = this.getAttribute('data-recipe-image');
+
+      var dataToSave = {
+        recipeUri: recipeUri,
+        recipeTitle: recipeTitle,
+        recipeImage: recipeImage
+      };
+
+      console.log('Saving recipe:', dataToSave); // Debugging: Log the data to save
+
+      fetch('/save-recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add CSRF token if needed
+        },
+        body: JSON.stringify(dataToSave)
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        if (response.ok) {
+          console.log('Recipe saved successfully!');
+          alert('Recipe saved successfully!'); // Show success message
+        } else {
+          console.error('Save recipe failed:', response.status);
+          alert('An error occurred while saving the recipe. Please try again.'); // Show error message
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
       });
     });
+  });
+});
+
     </script>
 </body>
 </html>

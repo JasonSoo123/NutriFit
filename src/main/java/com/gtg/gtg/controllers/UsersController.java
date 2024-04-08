@@ -502,7 +502,32 @@ public class UsersController {
         return "main/meals";
     }
     
+    @PostMapping("/remove-recipe")
+    public ResponseEntity<String> removeRecipe(HttpServletRequest request, @RequestBody Map<String, String> payload) {
+        Users sessionUser = (Users) request.getSession().getAttribute("session_user");
+        System.out.println("SElectd id is: "+ payload.get("id"));
+        int selectedId = Integer.parseInt(payload.get("id"));
+        List<SavedRecipe> savedRecipes = savedRecipesRepo.findByUserId(sessionUser.getUid());
+    
+        boolean recipeDeleted = false;
+        for (SavedRecipe recipe : savedRecipes) {
+            if (recipe.getId() == selectedId) {
+                savedRecipesRepo.delete(recipe);
+                recipeDeleted = true;
+                break; 
+            }
+        }
+    
+        if (recipeDeleted) {
+            return ResponseEntity.ok("Recipe deleted successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Recipe with ID " + selectedId + " not found or could not be deleted.");
+        }
+    }
+    
+    
 
+    long savedRecipeId = 0;
 
     @PostMapping("/save-recipe")
     public ResponseEntity<String> saveRecipe(HttpServletRequest request, @RequestBody Map<String, String> payload) {
@@ -532,9 +557,13 @@ public class UsersController {
             // Create a new SavedRecipe entity and save it to the repository
             SavedRecipe savedRecipe = new SavedRecipe();
             savedRecipe.setUserId(sessionUser.getUid());
+            // savedRecipe.setId(savedRecipeId);
             savedRecipe.setRecipeName(recipeName);
             savedRecipe.setRecipeImage(recipeImage);
             savedRecipe.setRecipeUri(recipeUri);
+
+            // savedRecipeId++;
+            // System.out.println("ID:" + savedRecipeId);
 
             savedRecipesRepo.save(savedRecipe);
     

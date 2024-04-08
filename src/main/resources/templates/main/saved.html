@@ -41,6 +41,7 @@
             <h5 class="card-title" th:text="${recipe.recipeName}">Recipe Title</h5>
             <div class="mt-auto">
               <a th:href="@{${recipe.recipeUri}}" class="btn btn-primary btn-smaller" >View Recipe</a>
+              <button class="btn btn-danger btn-smaller mt-2" th:data-id="${recipe.id}">Delete</button>
             </div>
           </div>
         </div>
@@ -57,5 +58,44 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Add a script to handle the delete button -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const deleteButtons = document.querySelectorAll('.btn-danger');
+      
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const id = this.getAttribute('data-id');
+          deleteRecipe(id);
+        });
+      });
+
+      function deleteRecipe(id) {
+        fetch('/remove-recipe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: id })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Recipe deleted successfully!');
+            alert('Recipe deleted successfully!');
+            // Optionally, reload the page or update the UI after deletion
+            location.reload();
+          } else {
+            console.error('Delete recipe failed:', response.status);
+            alert('An error occurred while deleting the recipe. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
