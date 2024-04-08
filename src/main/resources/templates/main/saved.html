@@ -16,6 +16,19 @@
       height: 18vw;
       object-fit: cover;
     }
+    /* Custom styles for the buttons */
+    .custom-btn {
+      width: 100%;
+      margin-top: 10px; /* Adjust as needed */
+    }
+    .btn-save {
+      background-color: blue;
+      color: white;
+    }
+    .btn-delete {
+      background-color: red;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -40,8 +53,8 @@
           <div class="card-body d-flex flex-column">
             <h5 class="card-title" th:text="${recipe.recipeName}">Recipe Title</h5>
             <div class="mt-auto">
-              <a th:href="@{${recipe.recipeUri}}" class="btn btn-primary btn-smaller" >View Recipe</a>
-              <button class="btn btn-danger btn-smaller mt-2" th:data-id="${recipe.id}">Delete</button>
+              <a th:href="@{${recipe.recipeUri}}" class="btn btn-primary custom-btn btn-save" >View Recipe</a>
+              <button class="btn btn-danger custom-btn btn-delete" th:data-id="${recipe.id}">Delete</button>
             </div>
           </div>
         </div>
