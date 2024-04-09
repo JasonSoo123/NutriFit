@@ -24,7 +24,10 @@
           </text>
         </svg>
       </div>
-      <p class="welcome fade-in" th:text="'Enjoy your stay, ' + ${user.name} + '!'"></p>
+      <div class="glitch-wrapper">
+        <div class="glitch" text="Your path to a healthy lifestyle.">Your path to a healthy lifestyle.</div>
+        <div class="glitch" th:text="'Enjoy your stay ' + ${user.name} + '!'"></div>
+      </div>
     </div>
   </header>
 
