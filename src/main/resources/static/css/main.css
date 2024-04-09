@@ -254,7 +254,7 @@
     animation: stroke 9s infinite alternate;
     stroke-width: 2;
     stroke: #4B4141;
-    font-size: 120px;
+    font-size: 95px;
   }
   @keyframes stroke {
     0%   {
@@ -287,7 +287,7 @@
 .glitch {
   position: relative;
   font-family: 'Ropa Sans', sans-serif;
-  font-size: 45px;
+  font-size: 39px;
   font-weight: 700;
   line-height: 1.2;
   color: rgba(21, 68, 30, 0.39);
