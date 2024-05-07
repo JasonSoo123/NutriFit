@@ -1,4 +1,5 @@
 Note: DataBase is ineffective on 2024-06-03.
+
 URL: https://cmpt276-gtg.onrender.com
 
 Feb 25th - Group repo has been initalized
